@@ -27,39 +27,58 @@ public class ServerPacketsManager : MarshalByRefObject
         return instance;
     }
 
-    public void DecodeLogin(int dataOffset, int dataLength, byte[] bytesArray, TcpClient client)
+    public void ReceiveHandshakeLogin(MinecraftPacketFrame packetFrame)
     {
-        HandshakePacket handshakePacket = new HandshakePacket(bytesArray);
-        log.Verbose($"Server Handshake with {client.GetIpAddress()}; " +
-                    $"PacketId: {handshakePacket.PacketId}, " +
-                    $"ProtocolVersion: {handshakePacket.ProtocolVersion} " +
-                    $"ServerAddress: {handshakePacket.ServerAddress} " +
-                    $"ServerPort: {handshakePacket.ServerPort} " +
-                    $"NextState: {handshakePacket.NextState}");
+        switch (packetFrame.SourceClient.state)
+        {
+            case 0:
+                HandshakePacket handshakePacket = new HandshakePacket(packetFrame.BytesArray);
+                log.Verbose($"Server Handshake with {packetFrame.SourceClient.IpAddress}; " +
+                            $"PacketId: {handshakePacket.PacketId}, " +
+                            $"ProtocolVersion: {handshakePacket.ProtocolVersion} " +
+                            $"ServerAddress: {handshakePacket.ServerAddress} " +
+                            $"ServerPort: {handshakePacket.ServerPort} " +
+                            $"NextState: {handshakePacket.NextState}");
+
+                packetFrame.SourceClient.state = handshakePacket.NextState;
+                break;
+
+            case 1:
+                break;
+            
+            case 2:
+                LoginStartPacket loginStartPacket = new LoginStartPacket(packetFrame.BytesArray);
+                log.Information($"Player {loginStartPacket.PlayerUsername} has logged in from {packetFrame.SourceClient.IpAddress}");
+                break;
+            
+            default:
+                break;
+        }
 
         return;
     }
 
-    public void RecieveRawNetworkBytes(byte[] byteArray, TcpClient client)
+    public void RecievePacketFrames(MinecraftPacketFrame packetFrame)
     {
         // aSize, bSize, .. are the size of the var Int
-        (int PacketLength, int aSize) = PacketDataUtils.ReadVarInt(byteArray);
 
-        (int PacketId, int bSize) = PacketDataUtils.ReadVarInt(byteArray, aSize);
-
-        int dataOffset = aSize + bSize;
-        int dataLength = PacketLength - bSize;
-
-        log.Verbose($"SERVER DECODE: PacketId: {PacketId} PacketLength: {PacketLength} Sizes {aSize} {bSize}");
+        log.Verbose($"SERVER DECODE: PacketId: {packetFrame.PacketId} PacketLength: {packetFrame.PacketLength}");
         
-        switch (PacketId)
+        switch (packetFrame.PacketId)
         {
             case 0:
-                DecodeLogin(dataOffset, dataLength, byteArray, client);
+                ReceiveHandshakeLogin(packetFrame);
                 break;
 
             default:
                 break;
+        }
+    }
+    public void RecieveRawNetworkBytes(byte[] byteArray, NetworkClient client)
+    {
+        foreach (var packetFrame in MinecraftPacketFrame.Create(byteArray,client))
+        {
+            RecievePacketFrames(packetFrame);
         }
     }
 }

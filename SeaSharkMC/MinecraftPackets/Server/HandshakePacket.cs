@@ -24,13 +24,10 @@ public class HandshakePacket : MinecraftBasePacket
         packetId = 0;
 
         (protocolVersion, int protocolSize) = PacketDataUtils.ReadVarInt(bytesArray, packetDataOffset);
+        
+        (serverAddress, int serverAddrSize) = PacketDataUtils.ReadVarIntString(bytesArray, packetDataOffset + protocolSize);
 
-        // Get server address sent from client
-        (int serverAddressLength, int serverAddrLengthSize) = PacketDataUtils.ReadVarInt(bytesArray, packetDataOffset + protocolSize); // 1 get address size
-
-        serverAddress = Encoding.UTF8.GetString(bytesArray, packetDataOffset + protocolSize + serverAddrLengthSize, serverAddressLength);
-
-        int serverPortOffset = packetDataOffset  + protocolSize + serverAddrLengthSize + serverAddressLength;
+        int serverPortOffset = packetDataOffset  + protocolSize + serverAddrSize;
         serverPort = (ushort)((ReadDataByte(serverPortOffset) << 8) | ReadDataByte(serverPortOffset + 1));
 
         (nextState, int nxtStateSize) = PacketDataUtils.ReadVarInt(bytesArray, serverPortOffset + 2);

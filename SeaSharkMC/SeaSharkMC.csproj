@@ -13,6 +13,7 @@
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,8 +52,11 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="MinecraftPackets\MinecraftPacketFrame.cs" />
+        <Compile Include="MinecraftPackets\Server\HandshakePacket.cs" />
+        <Compile Include="MinecraftPackets\Server\LoginStartPacket.cs" />
+        <Compile Include="NetworkClient.cs" />
         <Compile Include="ServerPacketsManager.cs" />
-        <Compile Include="MinecraftPackets\HandshakePacket.cs" />
         <Compile Include="MinecraftPackets\MinecraftBasePacket.cs" />
         <Compile Include="MinecraftPackets\PacketDataUtils.cs" />
         <Compile Include="Program.cs" />

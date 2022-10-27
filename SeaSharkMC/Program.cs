@@ -45,27 +45,25 @@ class Program
     private void handle_connection(IAsyncResult result) //the parameter is a delegate, used to communicate between threads
     {
         accept_connection(); //once again, checking for any other incoming connections
-        TcpClient client = server.EndAcceptTcpClient(result); //creates the TcpClient
-        NetworkStream ns = client.GetStream();
-        ns.Write(HelloMessage, 0, HelloMessage.Length);
-        String ipAdrress = client.GetIpAddress();
-        Log.Information($"Connected to {ipAdrress}");
-        /* here you can add the code to send/receive data */
-        Log.Debug($"Connection client buffer size: {client.ReceiveBufferSize}");
+        TcpClient tcpClient = server.EndAcceptTcpClient(result); //creates the TcpClient
+        NetworkClient client = new NetworkClient(tcpClient);
+        
+        Log.Information($"Connected to {client.IpAddress}");
+
         while (true)
         {
             byte[] msg = new byte[1024]; //the messages arrive as byte array
-            ns.Read(msg, 0, msg.Length); //the same networkstream reads the message sent by the client
+            client.Ns.Read(msg, 0, msg.Length); //the same networkstream reads the message sent by the client
 
             string message = Encoding.ASCII.GetString(msg).Trim('\0');
 
             if (message.Length == 0)
             {
-                Log.Information($"{ipAdrress} Connection lost");
+                Log.Information($"{client.IpAddress} Connection lost");
                 break;
             }
 
-            Log.Verbose($"NETWORK READ ::: From {ipAdrress} '{msg.ConvertBytesToHex()}' {message.Length}");
+            Log.Verbose($"NETWORK READ ::: From {client.IpAddress} '{msg.ConvertBytesToHex()}' {message.Length}");
             try
             {
                 _serverPacketsManager.RecieveRawNetworkBytes(msg, client);
@@ -73,7 +71,6 @@ class Program
             catch (Exception e)
             {
                 Log.Error(e,"An error has occured");
-                ns.Close();
                 client.Close();
                 break;
             }
