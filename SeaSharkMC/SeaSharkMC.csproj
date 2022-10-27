@@ -7,8 +7,8 @@
         <ProjectGuid>{435A44B8-40C8-4BAE-9D1A-80F8A30E4EE3}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>SharpMCServer</RootNamespace>
-        <AssemblyName>SharpMCServer</AssemblyName>
+        <RootNamespace>SeaSharkMC</RootNamespace>
+        <AssemblyName>SeaSharkMC</AssemblyName>
         <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

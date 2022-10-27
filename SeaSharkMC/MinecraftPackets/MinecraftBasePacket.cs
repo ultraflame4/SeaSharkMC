@@ -1,7 +1,7 @@
 ﻿
 using Serilog.Core;
 
-namespace SharpMCServer.MinecraftPackets;
+namespace SeaSharkMC.MinecraftPackets;
 
 public class MinecraftBasePacket
 {

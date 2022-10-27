@@ -2,7 +2,7 @@
 using System.Text;
 using Serilog;
 
-namespace SharpMCServer.MinecraftPackets;
+namespace SeaSharkMC.MinecraftPackets;
 
 public class HandshakePacket : MinecraftBasePacket
 {

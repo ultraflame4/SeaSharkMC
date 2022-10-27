@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Net;
 using System.Net.Sockets;
-using Serilog;
 
+namespace SeaSharkMC.MinecraftPackets;
 
 public static class PacketDataUtils
 {

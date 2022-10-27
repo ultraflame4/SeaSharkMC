@@ -2,10 +2,10 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Text.RegularExpressions;
+using SeaSharkMC.MinecraftPackets;
 using Serilog;
-using SharpMCServer;
 
+namespace SeaSharkMC;
 
 class Program
 {
