@@ -1,6 +1,6 @@
 ﻿namespace SeaSharkMC.MinecraftPackets;
 
-public class LoginStartPacket: MinecraftBasePacket
+public class LoginStartPacket: MinecraftServerPacket
 {
     private string playerUsername;
 

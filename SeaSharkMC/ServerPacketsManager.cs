@@ -12,6 +12,7 @@ public class ServerPacketsManager : MarshalByRefObject
     private static ServerPacketsManager instance;
     private ILogger log;
 
+
     private ServerPacketsManager()
     {
         log = Log.Logger.ForContext<ServerPacketsManager>();
@@ -49,6 +50,9 @@ public class ServerPacketsManager : MarshalByRefObject
             case 2:
                 LoginStartPacket loginStartPacket = new LoginStartPacket(packetFrame.BytesArray);
                 log.Information($"Player {loginStartPacket.PlayerUsername} has logged in from {packetFrame.SourceClient.IpAddress}");
+                // todo maybe add in encryption for online mode
+                GeneralUtils.GetUUId();
+
                 break;
             
             default:

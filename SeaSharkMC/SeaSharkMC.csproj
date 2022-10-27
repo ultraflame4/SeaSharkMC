@@ -52,9 +52,12 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="GeneralUtils.cs" />
+        <Compile Include="MinecraftPackets\Client\LoginSuccessPacket.cs" />
         <Compile Include="MinecraftPackets\MinecraftPacketFrame.cs" />
         <Compile Include="MinecraftPackets\Server\HandshakePacket.cs" />
         <Compile Include="MinecraftPackets\Server\LoginStartPacket.cs" />
+        <Compile Include="MinecraftPackets\Server\MinecraftServerPacket.cs" />
         <Compile Include="NetworkClient.cs" />
         <Compile Include="ServerPacketsManager.cs" />
         <Compile Include="MinecraftPackets\MinecraftBasePacket.cs" />

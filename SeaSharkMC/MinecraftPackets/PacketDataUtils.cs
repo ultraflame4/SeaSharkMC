@@ -65,6 +65,24 @@ public static class PacketDataUtils
 
         return index + 1;
     }
+    /// <summary>
+    /// Evaulates and return the size of the VarInt
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static int EvaluateVarInt(int value)
+    {
+        int index=0;
+        while (true)
+        {
+            if ((value & ~VAR_SEGMENT_BITS) == 0) { break; }
+            index++;
+            // bit shift it to the write because the first 7 bits from the left have been written
+            value >>=7;
+        }
+
+        return index + 1;
+    }
 
     /// <summary>
     /// 

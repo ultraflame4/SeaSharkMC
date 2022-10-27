@@ -4,7 +4,7 @@ using Serilog;
 
 namespace SeaSharkMC.MinecraftPackets;
 
-public class HandshakePacket : MinecraftBasePacket
+public class HandshakePacket : MinecraftServerPacket
 {
     protected int protocolVersion;
     protected string serverAddress;
