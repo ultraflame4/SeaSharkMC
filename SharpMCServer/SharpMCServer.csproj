@@ -51,7 +51,10 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="MCServer.cs" />
+        <Compile Include="ServerPacketsManager.cs" />
+        <Compile Include="MinecraftPackets\HandshakePacket.cs" />
+        <Compile Include="MinecraftPackets\MinecraftBasePacket.cs" />
+        <Compile Include="MinecraftPackets\PacketDataUtils.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

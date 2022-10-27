@@ -4,18 +4,23 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using Serilog;
+using SharpMCServer;
+
 
 class Program
 {
     static byte[] HelloMessage = Encoding.ASCII.GetBytes("Hello Visitor!");
+    static ServerPacketsManager _serverPacketsManager;
 
     static void Main(string[] args)
     {
         Program main = new Program();
         Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] | {Message:lj}{NewLine}{Exception}")
+                .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {SourceContext:l} | {Message:lj}{NewLine}{Exception}")
                 .CreateLogger();
+
+        _serverPacketsManager = ServerPacketsManager.getInstance();
 
         main.server_start(); //starting the server99
         Console.ReadLine();
@@ -41,7 +46,7 @@ class Program
         TcpClient client = server.EndAcceptTcpClient(result); //creates the TcpClient
         NetworkStream ns = client.GetStream();
         ns.Write(HelloMessage, 0, HelloMessage.Length);
-        String ipAdrress = (client.Client.LocalEndPoint as IPEndPoint).Address.ToString();
+        String ipAdrress = client.GetIpAddress();
         Log.Information($"Connected to {ipAdrress}");
         /* here you can add the code to send/receive data */
         Log.Debug($"Connection client buffer size: {client.ReceiveBufferSize}");
@@ -51,14 +56,25 @@ class Program
             ns.Read(msg, 0, msg.Length); //the same networkstream reads the message sent by the client
 
             string message = Encoding.ASCII.GetString(msg).Trim('\0');
-            
+
             if (message.Length == 0)
             {
                 Log.Information($"{ipAdrress} Connection lost");
                 break;
             }
 
-            Log.Verbose($"NETWORK READ ::: From {ipAdrress} '{BitConverter.ToString(msg).Replace("-",String.Empty)}' {message.Length}");
+            Log.Verbose($"NETWORK READ ::: From {ipAdrress} '{msg.ConvertBytesToHex()}' {message.Length}");
+            try
+            {
+                _serverPacketsManager.DecodeRawNetworkBytes(msg, client);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e,"An error has occured");
+                ns.Close();
+                client.Close();
+                break;
+            }
         }
     }
 }
