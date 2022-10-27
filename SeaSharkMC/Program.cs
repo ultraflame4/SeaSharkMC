@@ -23,7 +23,9 @@ class Program
         _serverPacketsManager = ServerPacketsManager.getInstance();
 
         main.server_start(); //starting the server99
+        Console.WriteLine("Enter to exit");
         Console.ReadLine();
+        Console.WriteLine("Exiting...");
         Log.CloseAndFlush();
     }
 
@@ -66,7 +68,7 @@ class Program
             Log.Verbose($"NETWORK READ ::: From {ipAdrress} '{msg.ConvertBytesToHex()}' {message.Length}");
             try
             {
-                _serverPacketsManager.DecodeRawNetworkBytes(msg, client);
+                _serverPacketsManager.RecieveRawNetworkBytes(msg, client);
             }
             catch (Exception e)
             {

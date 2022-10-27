@@ -40,7 +40,7 @@ public class ServerPacketsManager : MarshalByRefObject
         return;
     }
 
-    public void DecodeRawNetworkBytes(byte[] byteArray, TcpClient client)
+    public void RecieveRawNetworkBytes(byte[] byteArray, TcpClient client)
     {
         // aSize, bSize, .. are the size of the var Int
         (int PacketLength, int aSize) = PacketDataUtils.ReadVarInt(byteArray);
