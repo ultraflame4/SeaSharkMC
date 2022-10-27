@@ -21,12 +21,9 @@ public class MinecraftBasePacket
         packetDataLength = packetLength - bSize;
     }
 
-    public MinecraftBasePacket(int packetLength, int packetId, int packetDataOffset, int packetDataLength)
+    public MinecraftBasePacket(int packetId)
     {
-        this.packetLength = packetLength;
         this.packetId = packetId;
-        this.packetDataOffset = packetDataOffset;
-        this.packetDataLength = packetDataLength;
     }
 
     public byte ReadDataByte(int index)
@@ -42,9 +39,12 @@ public class MinecraftBasePacket
     public byte[] ToBytesArray()
     {
         byte[] data = GetDataByteArray();
+        packetDataLength = data.Length;
         int idSize = PacketDataUtils.EvaluateVarInt(packetId);
-        int packetLength = data.Length + idSize;
+        packetLength = data.Length + idSize;
         int lengthSize = PacketDataUtils.EvaluateVarInt(packetLength);
+        packetDataOffset = idSize + lengthSize;
+        
         bytesArray = new byte[lengthSize + packetLength];
         PacketDataUtils.WriteVarInt(bytesArray, packetLength);
         PacketDataUtils.WriteVarInt(bytesArray, packetId,lengthSize);

@@ -82,6 +82,11 @@ public static class PacketDataUtils
         }
 
         return index + 1;
+    }    
+    public static int EvaluateVarIntString(string value)
+    {
+        int sizeA = EvaluateVarInt( value.Length);
+        return sizeA + Encoding.UTF8.GetBytes(value).Length;
     }
 
     /// <summary>

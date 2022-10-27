@@ -6,7 +6,7 @@ using SeaSharkMC.MinecraftPackets;
 using Serilog;
 
 namespace SeaSharkMC;
-
+//  TODO MASSIVE TODO MUST CLEAN UP AND REORGANISE NETWORK PACKET CLASSES 
 class Program
 {
     static byte[] HelloMessage = Encoding.ASCII.GetBytes("Hello Visitor!");
