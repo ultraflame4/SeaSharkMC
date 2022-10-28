@@ -59,6 +59,8 @@
         <Compile Include="MinecraftPackets\Server\LoginStartPacket.cs" />
         <Compile Include="MinecraftPackets\Server\MinecraftServerPacket.cs" />
         <Compile Include="NetworkClient.cs" />
+        <Compile Include="Networking\MinecaftNetworkClient.cs" />
+        <Compile Include="Networking\MinecraftBasePacket.cs" />
         <Compile Include="ServerPacketsManager.cs" />
         <Compile Include="MinecraftPackets\MinecraftBasePacket.cs" />
         <Compile Include="MinecraftPackets\PacketDataUtils.cs" />
