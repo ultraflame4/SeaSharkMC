@@ -4,7 +4,7 @@ using Serilog;
 
 namespace SeaSharkMC.Networking.MinecraftPackets;
 
-public class HandshakePacket : MinecraftServerPacket
+public class HandshakePacket : MinecraftBasePacket
 {
     protected int protocolVersion;
     protected string serverAddress;
@@ -19,19 +19,23 @@ public class HandshakePacket : MinecraftServerPacket
 
     public ClientState NextState => nextState;
 
-    public HandshakePacket(byte[] bytesArray) : base(bytesArray)
+    public HandshakePacket(MinecraftPacketFrame packetFrame) : base(packetFrame)
     {
         packetId = 0;
 
-        (protocolVersion, int protocolSize) = PacketDataUtils.ReadVarInt(bytesArray, packetDataOffset);
+        (protocolVersion, int protocolSize) = PacketDataUtils.ReadVarInt(bytesArray, packetFrame.PacketDataOffset);
         
-        (serverAddress, int serverAddrSize) = PacketDataUtils.ReadVarIntString(bytesArray, packetDataOffset + protocolSize);
+        (serverAddress, int serverAddrSize) = PacketDataUtils.ReadVarIntString(bytesArray, packetFrame.PacketDataOffset + protocolSize);
 
-        int serverPortOffset = packetDataOffset  + protocolSize + serverAddrSize;
+        int serverPortOffset = packetFrame.PacketDataOffset  + protocolSize + serverAddrSize;
         serverPort = (ushort)((ReadDataByte(serverPortOffset) << 8) | ReadDataByte(serverPortOffset + 1));
 
         (int nextStateNumber, int nxtStateSize) = PacketDataUtils.ReadVarInt(bytesArray, serverPortOffset + 2);
         nextState = (ClientState)nextStateNumber;
     }
-    
+
+    protected override byte[] GetDataByteArray()
+    {
+        throw new NotImplementedException();
+    }
 }

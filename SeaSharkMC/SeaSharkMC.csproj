@@ -53,15 +53,16 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="GeneralUtils.cs" />
+        <Compile Include="Networking\MinecraftPackets\Client\EncryptionRequestPacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Client\LoginSuccessPacket.cs" />
         <Compile Include="Networking\MinecraftPackets\MinecraftBasePacket.cs" />
         <Compile Include="Networking\MinecraftPackets\MinecraftPacketFrame.cs" />
         <Compile Include="Networking\MinecraftPackets\PacketDataUtils.cs" />
         <Compile Include="Networking\MinecraftPackets\Server\HandshakePacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Server\LoginStartPacket.cs" />
-        <Compile Include="Networking\MinecraftPackets\Server\MinecraftServerPacket.cs" />
         <Compile Include="Networking\MinecraftNetworkClient.cs" />
         <Compile Include="Networking\ClientState.cs" />
+        <Compile Include="Networking\MinecraftPacketsListener.cs" />
         <Compile Include="Networking\ServerPacketsManager.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,20 +5,16 @@ namespace SeaSharkMC.Networking.MinecraftPackets;
 
 public abstract class MinecraftBasePacket
 {
-    protected int packetLength;
+
     protected int packetId;
-    protected int packetDataOffset;
-    protected int packetDataLength;
     protected byte[] bytesArray;
-
-    public MinecraftBasePacket(byte[] bytesArray)
+    
+    public MinecraftBasePacket(MinecraftPacketFrame packetFrame)
     {
-        this.bytesArray = bytesArray;
-        (packetLength, int aSize) = PacketDataUtils.ReadVarInt(bytesArray);
-        (packetId, int bSize) = PacketDataUtils.ReadVarInt(bytesArray, aSize);
+        bytesArray = packetFrame.BytesArray;
+        packetId = packetFrame.PacketId;
 
-        packetDataOffset = aSize + bSize;
-        packetDataLength = packetLength - bSize;
+
     }
 
     public MinecraftBasePacket(int packetId)
@@ -39,12 +35,11 @@ public abstract class MinecraftBasePacket
     public byte[] ToBytesArray()
     {
         byte[] data = GetDataByteArray();
-        packetDataLength = data.Length;
-        int idSize = PacketDataUtils.EvaluateVarInt(packetId);
-        packetLength = data.Length + idSize;
-        int lengthSize = PacketDataUtils.EvaluateVarInt(packetLength);
-        packetDataOffset = idSize + lengthSize;
         
+        int idSize = PacketDataUtils.EvaluateVarInt(packetId);
+        int packetLength = data.Length + idSize;
+        int lengthSize = PacketDataUtils.EvaluateVarInt(packetLength);
+
         bytesArray = new byte[lengthSize + packetLength];
         PacketDataUtils.WriteVarInt(bytesArray, packetLength);
         PacketDataUtils.WriteVarInt(bytesArray, packetId,lengthSize);
@@ -56,15 +51,7 @@ public abstract class MinecraftBasePacket
     /// This should return a byte array containing the packet's data
     /// </summary>
     protected abstract byte[] GetDataByteArray();
-    
-
-    public int PacketLength => packetLength;
 
     public int PacketId => packetId;
-
-    public int PacketDataOffset => packetDataOffset;
-
-    public int PacketDataLength => packetDataLength;
-
-    public byte[] BytesArray => bytesArray;
+    
 }

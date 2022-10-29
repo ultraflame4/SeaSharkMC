@@ -34,7 +34,7 @@ public class ServerPacketsManager : MarshalByRefObject
         byte[] uuid = GeneralUtils.GetUUId();
         LoginSuccessPacket packet = new LoginSuccessPacket(uuid, username);
         byte[] bytes = packet.ToBytesArray();
-        Log.Debug($"SUCCESS LOGIN {packet.ToBytesArray().ConvertBytesToHex()}");
+        log.Information($"Player {username} logged in successfully from {client.IpAddress}");
         client.Ns.Write(packet.ToBytesArray(),0,bytes.Length);
     }
     public void ReceiveHandshakePackets(MinecraftPacketFrame packetFrame)
@@ -42,7 +42,7 @@ public class ServerPacketsManager : MarshalByRefObject
         switch (packetFrame.SourceClient.state)
         {
             case ClientState.NONE:
-                HandshakePacket handshakePacket = new HandshakePacket(packetFrame.BytesArray);
+                HandshakePacket handshakePacket = new HandshakePacket(packetFrame);
                 log.Verbose($"Server Handshake with {packetFrame.SourceClient.IpAddress}; " +
                             $"PacketId: {handshakePacket.PacketId}, " +
                             $"ProtocolVersion: {handshakePacket.ProtocolVersion} " +
@@ -57,9 +57,9 @@ public class ServerPacketsManager : MarshalByRefObject
                 break;
             
             case ClientState.LOGIN:
-                LoginStartPacket loginStartPacket = new LoginStartPacket(packetFrame.BytesArray);
-                log.Information($"Player {loginStartPacket.PlayerUsername} has logged in from {packetFrame.SourceClient.IpAddress}");
+                LoginStartPacket loginStartPacket = new LoginStartPacket(packetFrame);
                 // todo maybe add in encryption for online mode
+                log.Information($"Player {loginStartPacket.PlayerUsername} attempting to connect from {packetFrame.SourceClient.IpAddress}");
                 SendLoginSuccessPacket(loginStartPacket.PlayerUsername, packetFrame.SourceClient);
                 break;
             

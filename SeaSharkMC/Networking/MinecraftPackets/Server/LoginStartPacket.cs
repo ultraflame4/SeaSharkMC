@@ -1,13 +1,18 @@
 ﻿namespace SeaSharkMC.Networking.MinecraftPackets;
 
-public class LoginStartPacket: MinecraftServerPacket
+public class LoginStartPacket: MinecraftBasePacket
 {
     private string playerUsername;
 
     public string PlayerUsername => playerUsername;
 
-    public LoginStartPacket(byte[] bytesArray) : base(bytesArray)
+    public LoginStartPacket(MinecraftPacketFrame packetFrame) : base(packetFrame)
     {
-        (playerUsername, int size) = PacketDataUtils.ReadVarIntString(bytesArray, packetDataOffset);
+        (playerUsername, int size) = PacketDataUtils.ReadVarIntString(bytesArray, packetFrame.PacketDataOffset);
+    }
+
+    protected override byte[] GetDataByteArray()
+    {
+        throw new System.NotImplementedException();
     }
 }
