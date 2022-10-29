@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 using SeaSharkMC.Networking.MinecraftPackets;
-using SeaSharkMC.Networking.MinecraftPackets.Client;
 using SeaSharkMC.Networking.MinecraftPackets.Listeners;
 using Serilog;
 
@@ -12,7 +8,7 @@ namespace SeaSharkMC.Networking;
 
 public class ServerPacketsManager : MarshalByRefObject
 {
-    private static ServerPacketsManager instance;
+    private static ServerPacketsManager? _instance;
     private ILogger log;
     
     private List<MinecraftPacketListener> packetListeners = new();
@@ -24,14 +20,14 @@ public class ServerPacketsManager : MarshalByRefObject
         packetListeners.Add(new PlayerLoginPacketListener());
     }
 
-    public static ServerPacketsManager getInstance()
+    public static ServerPacketsManager GetInstance()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = new ServerPacketsManager();
+            _instance = new ServerPacketsManager();
         }
 
-        return instance;
+        return _instance;
     }
     public void RecievePacketFrames(MinecraftPacketFrame packetFrame)
     {

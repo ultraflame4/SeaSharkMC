@@ -20,7 +20,7 @@ class Program
                 .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {SourceContext:l} | {Message:lj}{NewLine}{Exception}")
                 .CreateLogger();
 
-        _serverPacketsManager = ServerPacketsManager.getInstance();
+        _serverPacketsManager = ServerPacketsManager.GetInstance();
 
         main.server_start(); //starting the server99
         Console.WriteLine("Enter to exit");
