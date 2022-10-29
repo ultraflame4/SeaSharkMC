@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 using SeaSharkMC.Networking.MinecraftPackets;
 
 namespace SeaSharkMC.Networking;
@@ -10,6 +11,7 @@ public class MinecraftNetworkClient
     private NetworkStream ns;
 
     public ClientState state = ClientState.NONE;
+    public event Action ClientDisconnect;
     public string IpAddress => ipAddress;
     public NetworkStream Ns => ns;
 
@@ -20,9 +22,16 @@ public class MinecraftNetworkClient
         this.tcpClient = tcpClient;
     }
 
+    public void SendPacket(MinecraftBasePacket packet)
+    {
+        byte[] bytes = packet.ToBytesArray();
+        ns.Write(packet.ToBytesArray(), 0, bytes.Length);
+    }
+
     public void Close()
     {
         ns.Close();
         tcpClient.Close();
+        ClientDisconnect?.Invoke();
     }
 }

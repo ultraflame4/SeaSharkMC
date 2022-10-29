@@ -1,20 +1,22 @@
 ﻿using System;
 using SeaSharkMC.Networking.MinecraftPackets;
+using Serilog;
 
 namespace SeaSharkMC.Networking;
 
-/// <summary>
-/// All child class of this class is responsible for converting bytes to an instance of 'T' and vice versa. 
-/// </summary>
-/// <typeparam name="T"></typeparam>
-public abstract class MinecraftPacketsListener<T> where T : MinecraftBasePacket
+
+public abstract class MinecraftPacketListener
 {
     public readonly int targetPacketId;
-    
-    protected MinecraftPacketsListener(int targetPacketId)
+    protected ILogger logs = null;
+
+    public MinecraftPacketListener(int targetPacketId)
     {
         this.targetPacketId = targetPacketId;
+        logs = Log.ForContext(this.GetType());
     }
+    
+    
 
     /// <summary>
     /// Called when the server receives a packet with a packet id equal to targetPacketId

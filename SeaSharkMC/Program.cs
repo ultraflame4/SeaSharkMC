@@ -59,7 +59,6 @@ class Program
 
             if (message.Length == 0)
             {
-                Log.Information($"{client.IpAddress} Connection lost");
                 break;
             }
 
@@ -75,5 +74,7 @@ class Program
                 break;
             }
         }
+        Log.Information($"{client.IpAddress} Connection lost");
+        
     }
 }
