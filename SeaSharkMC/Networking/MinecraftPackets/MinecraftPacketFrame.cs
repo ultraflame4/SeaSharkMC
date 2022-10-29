@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Serilog;
 
-namespace SeaSharkMC.MinecraftPackets;
+namespace SeaSharkMC.Networking.MinecraftPackets;
 
 public class MinecraftPacketFrame
 {
@@ -13,7 +13,7 @@ public class MinecraftPacketFrame
     protected int packetDataLength;
     protected byte[] bytesArray;
     protected int totalSize;
-    protected NetworkClient? sourceClient;
+    protected MinecraftNetworkClient? sourceClient;
 
     public int PacketLength => packetLength;
 
@@ -33,11 +33,11 @@ public class MinecraftPacketFrame
     /// <summary>
     /// The client it originated from. If null, source is server
     /// </summary>
-    public NetworkClient? SourceClient => sourceClient;
+    public MinecraftNetworkClient? SourceClient => sourceClient;
 
 
 
-    private MinecraftPacketFrame(byte[] bytesArray, int offset=0, NetworkClient? sourceClient = null)
+    private MinecraftPacketFrame(byte[] bytesArray, int offset=0, MinecraftNetworkClient? sourceClient = null)
     {
         (packetLength, int aSize) = PacketDataUtils.ReadVarInt(bytesArray,offset);
         (packetId, int bSize) = PacketDataUtils.ReadVarInt(bytesArray, aSize+offset);
@@ -55,7 +55,7 @@ public class MinecraftPacketFrame
     /// </summary>
     /// <param name="bytesArray"></param>
     /// <param name="sourceClient">Null if server</param>
-    public static MinecraftPacketFrame[] Create(byte[] bytesArray, NetworkClient? sourceClient = null)
+    public static MinecraftPacketFrame[] Create(byte[] bytesArray, MinecraftNetworkClient? sourceClient = null)
     {
         int offset = 0;
         List<MinecraftPacketFrame> frames = new List<MinecraftPacketFrame>();

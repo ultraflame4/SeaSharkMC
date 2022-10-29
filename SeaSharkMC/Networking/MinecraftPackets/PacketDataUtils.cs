@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using Serilog;
 
-namespace SeaSharkMC.MinecraftPackets;
+namespace SeaSharkMC.Networking.MinecraftPackets;
 
 public static class PacketDataUtils
 {

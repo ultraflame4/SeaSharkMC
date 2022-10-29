@@ -1,7 +1,7 @@
 ﻿using System;
 using Serilog;
 
-namespace SeaSharkMC.MinecraftPackets.Client;
+namespace SeaSharkMC.Networking.MinecraftPackets.Client;
 
 public class LoginSuccessPacket : MinecraftBasePacket
 {

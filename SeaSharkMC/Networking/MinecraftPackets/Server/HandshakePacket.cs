@@ -2,14 +2,14 @@
 using System.Text;
 using Serilog;
 
-namespace SeaSharkMC.MinecraftPackets;
+namespace SeaSharkMC.Networking.MinecraftPackets;
 
 public class HandshakePacket : MinecraftServerPacket
 {
     protected int protocolVersion;
     protected string serverAddress;
     protected ushort serverPort;
-    protected int nextState;
+    protected ClientState nextState;
 
     public int ProtocolVersion => protocolVersion;
 
@@ -17,7 +17,7 @@ public class HandshakePacket : MinecraftServerPacket
 
     public int ServerPort => serverPort;
 
-    public int NextState => nextState;
+    public ClientState NextState => nextState;
 
     public HandshakePacket(byte[] bytesArray) : base(bytesArray)
     {
@@ -30,6 +30,8 @@ public class HandshakePacket : MinecraftServerPacket
         int serverPortOffset = packetDataOffset  + protocolSize + serverAddrSize;
         serverPort = (ushort)((ReadDataByte(serverPortOffset) << 8) | ReadDataByte(serverPortOffset + 1));
 
-        (nextState, int nxtStateSize) = PacketDataUtils.ReadVarInt(bytesArray, serverPortOffset + 2);
+        (int nextStateNumber, int nxtStateSize) = PacketDataUtils.ReadVarInt(bytesArray, serverPortOffset + 2);
+        nextState = (ClientState)nextStateNumber;
     }
+    
 }

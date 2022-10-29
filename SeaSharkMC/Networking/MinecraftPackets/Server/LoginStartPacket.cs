@@ -1,4 +1,4 @@
-﻿namespace SeaSharkMC.MinecraftPackets;
+﻿namespace SeaSharkMC.Networking.MinecraftPackets;
 
 public class LoginStartPacket: MinecraftServerPacket
 {

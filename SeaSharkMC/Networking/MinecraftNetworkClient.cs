@@ -1,19 +1,19 @@
 ﻿using System.Net.Sockets;
-using SeaSharkMC.MinecraftPackets;
+using SeaSharkMC.Networking.MinecraftPackets;
 
-namespace SeaSharkMC;
+namespace SeaSharkMC.Networking;
 
-public class NetworkClient
+public class MinecraftNetworkClient
 {
     private string ipAddress;
     private TcpClient tcpClient;
     private NetworkStream ns;
 
-    public int state = 0;
+    public ClientState state = ClientState.NONE;
     public string IpAddress => ipAddress;
     public NetworkStream Ns => ns;
 
-    public NetworkClient(TcpClient tcpClient)
+    public MinecraftNetworkClient(TcpClient tcpClient)
     {
         ipAddress = tcpClient.GetIpAddress();
         ns = tcpClient.GetStream();

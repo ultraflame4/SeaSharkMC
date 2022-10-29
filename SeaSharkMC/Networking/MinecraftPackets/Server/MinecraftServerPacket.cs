@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SeaSharkMC.MinecraftPackets;
+namespace SeaSharkMC.Networking.MinecraftPackets;
 
 public class MinecraftServerPacket : MinecraftBasePacket
 {

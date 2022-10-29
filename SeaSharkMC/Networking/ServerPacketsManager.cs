@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using SeaSharkMC.MinecraftPackets;
-using SeaSharkMC.MinecraftPackets.Client;
+using SeaSharkMC.Networking.MinecraftPackets;
+using SeaSharkMC.Networking.MinecraftPackets.Client;
 using Serilog;
 
-namespace SeaSharkMC;
+namespace SeaSharkMC.Networking;
 
 public class ServerPacketsManager : MarshalByRefObject
 {
@@ -29,7 +29,7 @@ public class ServerPacketsManager : MarshalByRefObject
         return instance;
     }
 
-    public void SendLoginSuccessPacket(String username, NetworkClient client)
+    public void SendLoginSuccessPacket(String username, MinecraftNetworkClient client)
     {
         byte[] uuid = GeneralUtils.GetUUId();
         LoginSuccessPacket packet = new LoginSuccessPacket(uuid, username);
@@ -37,11 +37,11 @@ public class ServerPacketsManager : MarshalByRefObject
         Log.Debug($"SUCCESS LOGIN {packet.ToBytesArray().ConvertBytesToHex()}");
         client.Ns.Write(packet.ToBytesArray(),0,bytes.Length);
     }
-    public void ReceiveHandshakeLogin(MinecraftPacketFrame packetFrame)
+    public void ReceiveHandshakePackets(MinecraftPacketFrame packetFrame)
     {
         switch (packetFrame.SourceClient.state)
         {
-            case 0:
+            case ClientState.NONE:
                 HandshakePacket handshakePacket = new HandshakePacket(packetFrame.BytesArray);
                 log.Verbose($"Server Handshake with {packetFrame.SourceClient.IpAddress}; " +
                             $"PacketId: {handshakePacket.PacketId}, " +
@@ -53,10 +53,10 @@ public class ServerPacketsManager : MarshalByRefObject
                 packetFrame.SourceClient.state = handshakePacket.NextState;
                 break;
 
-            case 1:
+            case ClientState.STATUS:
                 break;
             
-            case 2:
+            case ClientState.LOGIN:
                 LoginStartPacket loginStartPacket = new LoginStartPacket(packetFrame.BytesArray);
                 log.Information($"Player {loginStartPacket.PlayerUsername} has logged in from {packetFrame.SourceClient.IpAddress}");
                 // todo maybe add in encryption for online mode
@@ -78,15 +78,15 @@ public class ServerPacketsManager : MarshalByRefObject
         
         switch (packetFrame.PacketId)
         {
-            case 0:
-                ReceiveHandshakeLogin(packetFrame);
+            case 0x00:
+                ReceiveHandshakePackets(packetFrame);
                 break;
 
             default:
                 break;
         }
     }
-    public void RecieveRawNetworkBytes(byte[] byteArray, NetworkClient client)
+    public void RecieveRawNetworkBytes(byte[] byteArray, MinecraftNetworkClient client)
     {
         foreach (var packetFrame in MinecraftPacketFrame.Create(byteArray,client))
         {

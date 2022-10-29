@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using SeaSharkMC.MinecraftPackets;
+using SeaSharkMC.Networking.MinecraftPackets;
 using Serilog;
 
 namespace SeaSharkMC;

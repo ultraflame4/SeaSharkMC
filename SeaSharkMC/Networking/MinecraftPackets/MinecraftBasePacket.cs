@@ -1,9 +1,9 @@
 ﻿using System;
 using Serilog.Core;
 
-namespace SeaSharkMC.MinecraftPackets;
+namespace SeaSharkMC.Networking.MinecraftPackets;
 
-public class MinecraftBasePacket
+public abstract class MinecraftBasePacket
 {
     protected int packetLength;
     protected int packetId;
@@ -53,13 +53,10 @@ public class MinecraftBasePacket
     }
 
     /// <summary>
-    /// This should return a byte array containing the data part of the packet, aka excluding packet id and length
+    /// This should return a byte array containing the packet's data
     /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
-    protected virtual byte[] GetDataByteArray()
-    {
-        throw new NotImplementedException();
-    }
+    protected abstract byte[] GetDataByteArray();
+    
 
     public int PacketLength => packetLength;
 

@@ -2,11 +2,11 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using SeaSharkMC.MinecraftPackets;
+using SeaSharkMC.Networking;
+using SeaSharkMC.Networking.MinecraftPackets;
 using Serilog;
 
 namespace SeaSharkMC;
-//  TODO MASSIVE TODO MUST CLEAN UP AND REORGANISE NETWORK PACKET CLASSES 
 class Program
 {
     static byte[] HelloMessage = Encoding.ASCII.GetBytes("Hello Visitor!");
@@ -46,7 +46,7 @@ class Program
     {
         accept_connection(); //once again, checking for any other incoming connections
         TcpClient tcpClient = server.EndAcceptTcpClient(result); //creates the TcpClient
-        NetworkClient client = new NetworkClient(tcpClient);
+        MinecraftNetworkClient client = new MinecraftNetworkClient(tcpClient);
         
         Log.Information($"Connected to {client.IpAddress}");
 
