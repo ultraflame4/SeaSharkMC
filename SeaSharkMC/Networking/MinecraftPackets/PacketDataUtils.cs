@@ -105,7 +105,6 @@ public static class PacketDataUtils
             bytesBuffer[offset + bytesWrote + count] = b;
             count++;
         }
-        Log.Debug($"String write VarInt:{bytesWrote}, Count {count+1}");
         return bytesWrote + count;
     }
     
