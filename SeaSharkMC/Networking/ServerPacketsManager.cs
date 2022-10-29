@@ -6,7 +6,7 @@ using Serilog;
 
 namespace SeaSharkMC.Networking;
 
-public class ServerPacketsManager : MarshalByRefObject
+public class ServerPacketsManager
 {
     private static ServerPacketsManager? _instance;
     private ILogger log;
