@@ -34,7 +34,6 @@ public class PlayerLoginPacketListener : MinecraftPacketListener
                 logs.Information("Player {Username} attempting to connect from {IP}",
                     loginStartPacket.PlayerUsername, packetFrame.SourceClient.IpAddress);
 
-
                 // todo maybe add in encryption for online mode
                 MinecraftPlayer minecraftPlayer = ServerWorld.getInstance().CreatePlayer(loginStartPacket.PlayerUsername, packetFrame.SourceClient);
                 minecraftPlayer.NetworkClient.SendPacket(new LoginSuccessPacket(minecraftPlayer.uuid, minecraftPlayer.Username));
