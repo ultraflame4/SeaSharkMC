@@ -20,6 +20,14 @@ public class HandshakePacket : MinecraftBasePacket
 
     public ClientState NextState => nextState;
 
+    public HandshakePacket( int protocolVersion, string serverAddress, ushort serverPort, ClientState nextState) : base(0x00)
+    {
+        this.protocolVersion = protocolVersion;
+        this.serverAddress = serverAddress;
+        this.serverPort = serverPort;
+        this.nextState = nextState;
+    }
+
     public HandshakePacket(RawMinecraftPacket packet) : base(packet)
     {
         packetId = 0;

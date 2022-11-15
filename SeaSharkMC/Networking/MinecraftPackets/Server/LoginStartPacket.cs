@@ -8,6 +8,11 @@ public class LoginStartPacket : MinecraftBasePacket
 
     public string PlayerUsername => playerUsername;
 
+    public LoginStartPacket(string playerUsername) : base(0x00)
+    {
+        this.playerUsername = playerUsername;
+    }
+
     public LoginStartPacket(RawMinecraftPacket packet) : base(packet)
     {
         playerUsername = packet.Stream.ReadVarIntString();
