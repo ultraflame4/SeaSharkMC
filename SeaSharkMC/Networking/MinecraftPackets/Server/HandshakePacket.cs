@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using Serilog;
 
@@ -19,22 +20,17 @@ public class HandshakePacket : MinecraftBasePacket
 
     public ClientState NextState => nextState;
 
-    public HandshakePacket(MinecraftPacketFrame packetFrame) : base(packetFrame)
+    public HandshakePacket(RawMinecraftPacket packet) : base(packet)
     {
         packetId = 0;
 
-        (protocolVersion, int protocolSize) = PacketDataUtils.ReadVarInt(bytesArray, packetFrame.PacketDataOffset);
-        
-        (serverAddress, int serverAddrSize) = PacketDataUtils.ReadVarIntString(bytesArray, packetFrame.PacketDataOffset + protocolSize);
-
-        int serverPortOffset = packetFrame.PacketDataOffset  + protocolSize + serverAddrSize;
-        serverPort = (ushort)((ReadDataByte(serverPortOffset) << 8) | ReadDataByte(serverPortOffset + 1));
-
-        (int nextStateNumber, int nxtStateSize) = PacketDataUtils.ReadVarInt(bytesArray, serverPortOffset + 2);
-        nextState = (ClientState)nextStateNumber;
+        protocolVersion = packet.Stream.ReadVarInt();
+        serverAddress = packet.Stream.ReadVarIntString();
+        serverPort = (ushort)((packet.Stream.ReadByte() << 8) | packet.Stream.ReadByte());
+        nextState = (ClientState)packet.Stream.ReadVarInt();
     }
 
-    protected override byte[] GetDataByteArray()
+    protected override void OnDataToBytes(MemoryStream dataStream)
     {
         throw new NotImplementedException();
     }

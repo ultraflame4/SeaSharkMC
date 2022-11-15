@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Serilog;
 
 namespace SeaSharkMC.Networking.MinecraftPackets.Client;
@@ -15,13 +16,10 @@ public class LoginSuccessPacket : MinecraftBasePacket
         this.ToBytesArray();
     }
 
-    protected override byte[] GetDataByteArray()
+    protected override void OnDataToBytes(MemoryStream dataStream)
     {
-        int usernameSize = PacketDataUtils.EvaluateVarIntString(username);
-        byte[] data = new byte[uuid.Length + usernameSize];
-        Array.Copy(uuid,0,data,0,uuid.Length);
-        PacketDataUtils.WriteVarIntString(data, username, uuid.Length);
-
-        return data;
+        dataStream.Write(uuid, 0, uuid.Length);
+        dataStream.WriteVarIntString(username);
     }
+    
 }

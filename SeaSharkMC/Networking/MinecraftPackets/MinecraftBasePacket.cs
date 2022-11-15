@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Serilog.Core;
 
 namespace SeaSharkMC.Networking.MinecraftPackets;
@@ -7,14 +8,11 @@ public abstract class MinecraftBasePacket
 {
 
     protected int packetId;
-    protected byte[] bytesArray;
-    
-    public MinecraftBasePacket(MinecraftPacketFrame packetFrame)
+    public int PacketId => packetId;
+
+    public MinecraftBasePacket(RawMinecraftPacket packet)
     {
-        bytesArray = packetFrame.BytesArray;
-        packetId = packetFrame.PacketId;
-
-
+        packetId = packet.PacketId;
     }
 
     public MinecraftBasePacket(int packetId)
@@ -22,10 +20,6 @@ public abstract class MinecraftBasePacket
         this.packetId = packetId;
     }
 
-    public byte ReadDataByte(int index)
-    {
-        return bytesArray[index];
-    }
 
     /// <summary>
     /// Formats the bytearray and returns it. Note that the returned object IS NOT a copy
@@ -34,24 +28,21 @@ public abstract class MinecraftBasePacket
     /// <returns></returns>
     public byte[] ToBytesArray()
     {
-        byte[] data = GetDataByteArray();
-        
-        int idSize = PacketDataUtils.EvaluateVarInt(packetId);
-        int packetLength = data.Length + idSize;
-        int lengthSize = PacketDataUtils.EvaluateVarInt(packetLength);
+        MemoryStream dataStream = new MemoryStream();
+        PacketDataUtils.WriteVarInt(dataStream,packetId);
+        OnDataToBytes(dataStream);
+        int packetLength = (int)dataStream.Length;
 
-        bytesArray = new byte[lengthSize + packetLength];
-        PacketDataUtils.WriteVarInt(bytesArray, packetLength);
-        PacketDataUtils.WriteVarInt(bytesArray, packetId,lengthSize);
-        Array.Copy(data,0,bytesArray,lengthSize+idSize,data.Length);
-        return bytesArray;
+        MemoryStream packetBytes = new MemoryStream();
+        PacketDataUtils.WriteVarInt(packetBytes,packetLength);
+        dataStream.CopyTo(packetBytes);
+        return packetBytes.ToArray();
     }
 
     /// <summary>
     /// This should return a byte array containing the packet's data
     /// </summary>
-    protected abstract byte[] GetDataByteArray();
+    protected abstract void OnDataToBytes(MemoryStream dataStream);
 
-    public int PacketId => packetId;
-    
+
 }

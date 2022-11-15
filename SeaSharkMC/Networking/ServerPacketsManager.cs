@@ -1,52 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
 using SeaSharkMC.Networking.MinecraftPackets;
-using SeaSharkMC.Networking.MinecraftPackets.Listeners;
+using SeaSharkMC.Networking.MinecraftPackets.Client;
 using Serilog;
 
 namespace SeaSharkMC.Networking;
 
-public class ServerPacketsManager
+public class ServerPacketsManager : MarshalByRefObject
 {
-    private static ServerPacketsManager? _instance;
+    private static ServerPacketsManager instance;
     private ILogger log;
-    
-    private List<MinecraftPacketListener> packetListeners = new();
+
 
     private ServerPacketsManager()
     {
         log = Log.Logger.ForContext<ServerPacketsManager>();
-        
-        packetListeners.Add(new PlayerLoginPacketListener());
     }
 
-    public static ServerPacketsManager GetInstance()
+    public static ServerPacketsManager getInstance()
     {
-        if (_instance == null)
+        if (instance == null)
         {
-            _instance = new ServerPacketsManager();
+            instance = new ServerPacketsManager();
         }
 
-        return _instance;
+        return instance;
     }
-    public void RecievePacketFrames(MinecraftPacketFrame packetFrame)
+
+    public void SendLoginSuccessPacket(String username, MinecraftNetworkClient client)
+    {
+        byte[] uuid = GeneralUtils.GetUUId();
+        LoginSuccessPacket packet = new LoginSuccessPacket(uuid, username);
+        byte[] bytes = packet.ToBytesArray();
+        log.Information($"Player {username} logged in successfully from {client.IpAddress}");
+        client.Ns.Write(packet.ToBytesArray(),0,bytes.Length);
+    }
+    public void ReceiveHandshakePackets(RawMinecraftPacket packet)
+    {
+        switch (packet.SourceClient.state)
+        {
+            case ClientState.NONE:
+                HandshakePacket handshakePacket = new HandshakePacket(packet);
+                log.Verbose($"Server Handshake with {packet.SourceClient.IpAddress}; " +
+                            $"PacketId: {handshakePacket.PacketId}, " +
+                            $"ProtocolVersion: {handshakePacket.ProtocolVersion} " +
+                            $"ServerAddress: {handshakePacket.ServerAddress} " +
+                            $"ServerPort: {handshakePacket.ServerPort} " +
+                            $"NextState: {handshakePacket.NextState}");
+
+                packet.SourceClient.state = handshakePacket.NextState;
+                break;
+
+            case ClientState.STATUS:
+                break;
+            
+            case ClientState.LOGIN:
+                LoginStartPacket loginStartPacket = new LoginStartPacket(packet);
+                // todo maybe add in encryption for online mode
+                log.Information($"Player {loginStartPacket.PlayerUsername} attempting to connect from {packet.SourceClient.IpAddress}");
+                SendLoginSuccessPacket(loginStartPacket.PlayerUsername, packet.SourceClient);
+                break;
+            
+            default:
+                break;
+        }
+
+        return;
+    }
+
+    public void RecievePacketFrames(RawMinecraftPacket packet)
     {
         // aSize, bSize, .. are the size of the var Int
 
-        log.Verbose($"SERVER DECODE: PacketId: {packetFrame.PacketId} PacketLength: {packetFrame.PacketLength}");
-        foreach (var listener in packetListeners)
+        log.Verbose($"SERVER DECODE: PacketId: {packet.PacketId} PacketLength: {packet.PacketLength}");
+        
+        switch (packet.PacketId)
         {
-            if (listener.targetPacketId == packetFrame.PacketId)
-            {
-                listener.RecievePacketFrame(packetFrame);
+            case 0x00:
+                ReceiveHandshakePackets(packet);
                 break;
-            }
+
+            default:
+                break;
         }
     }
-
     public void RecieveRawNetworkBytes(byte[] byteArray, MinecraftNetworkClient client)
     {
-        foreach (var packetFrame in MinecraftPacketFrame.Create(byteArray, client))
+        foreach (var packetFrame in RawMinecraftPacket.Create(byteArray,client))
         {
             RecievePacketFrames(packetFrame);
         }

@@ -21,8 +21,8 @@ public abstract class MinecraftPacketListener
     /// <summary>
     /// Called when the server receives a packet with a packet id equal to targetPacketId
     /// </summary>
-    /// <param name="packetFrame">The packet frame. This contains useful information and methids such as the data offset and ReadData(x), things generally needed./param>
-    public abstract void RecievePacketFrame(MinecraftPacketFrame packetFrame);
+    /// <param name="packet">The packet frame. This contains useful information and methids such as the data offset and ReadData(x), things generally needed./param>
+    public abstract void RecievePacketFrame(RawMinecraftPacket packet);
 
     
     
