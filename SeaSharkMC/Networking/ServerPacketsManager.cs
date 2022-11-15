@@ -19,7 +19,7 @@ public class ServerPacketsManager : MarshalByRefObject
         log = Log.Logger.ForContext<ServerPacketsManager>();
     }
 
-    public static ServerPacketsManager getInstance()
+    public static ServerPacketsManager GetInstance()
     {
         if (instance == null)
         {
