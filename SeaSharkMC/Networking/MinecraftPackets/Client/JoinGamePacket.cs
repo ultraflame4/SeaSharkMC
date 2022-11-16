@@ -1,11 +1,12 @@
 ﻿using System.IO;
 using fNbt;
+using SeaSharkMC.Networking.Datatypes;
 
 namespace SeaSharkMC.Networking.MinecraftPackets.Client;
 
 // https://wiki.vg/index.php?title=Protocol&oldid=16681#Join_Game
 
-public class JoinGamePacket:MinecraftBasePacket
+public class JoinGamePacket: MinecraftBasePacket
 {
     public int EntityID = 0;
     public bool IsHardcore = false;
@@ -13,7 +14,16 @@ public class JoinGamePacket:MinecraftBasePacket
     public World.Gamemode? PrevGamemode = null;
     public string[] WorldNames;
     public NbtCompound DimensionCodec;
-    
+    public NbtCompound Dimension;
+    public string WorldName;
+    public long HashedSeed;
+    public VarInt MaxPlayers;
+    public VarInt ViewDistance;
+    public bool ReducedDebugInfo;
+    public bool EnableRespawnScren;
+    public bool IsDebug;
+    public bool IsFlat;
+
     public JoinGamePacket() : base(0x24)
     {
         

@@ -56,12 +56,13 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="GeneralUtils.cs" />
+        <Compile Include="Networking\Datatypes\VarInt.cs" />
         <Compile Include="Networking\MinecraftPackets\Client\JoinGamePacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Client\LoginSuccessPacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Listeners\PlayerLoginPacketListener.cs" />
         <Compile Include="Networking\MinecraftPackets\MinecraftBasePacket.cs" />
-        <Compile Include="Networking\MinecraftPackets\RawMinecraftPacket.cs" />
         <Compile Include="Networking\MinecraftPackets\PacketDataUtils.cs" />
+        <Compile Include="Networking\MinecraftPackets\RawMinecraftPacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Server\HandshakePacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Server\LoginStartPacket.cs" />
         <Compile Include="Networking\MinecraftNetworkClient.cs" />

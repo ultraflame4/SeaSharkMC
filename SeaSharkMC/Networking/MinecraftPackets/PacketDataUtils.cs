@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using Serilog;
+using SeaSharkMC.Networking.Datatypes;
 
 namespace SeaSharkMC.Networking.MinecraftPackets;
 
@@ -14,25 +13,10 @@ public static class PacketDataUtils
     private const int VAR_SEGMENT_BITS = 0x7F;
     private const int VAR_CONTINUE_BIT = 0x80;
 
+    [Obsolete("ReadVarInt is deprecated. Use The VarInt struct and VarInt.ReadFrom(stream) method instead!")]
     public static int ReadVarInt(this MemoryStream byteStream)
     {
-        int value = 0;
-        int position = 0;
-        byte currentByte;
-        while (true)
-        {
-            currentByte = (byte)byteStream.ReadByte();
-            value |= currentByte;
-            
-            if ((currentByte & VAR_CONTINUE_BIT) == 0)
-            {
-                break;
-            }
-            position += 7;
-            if (position >= 32) throw new ArgumentOutOfRangeException("VarInt is too big");
-        }
-
-        return value;
+        return VarInt.ReadFrom(byteStream);
     }
 
     /// <summary>
@@ -40,28 +24,17 @@ public static class PacketDataUtils
     /// </summary>
     /// <param name="byteStream"></param>
     /// <param name="value"></param>
+    [Obsolete("WriteVarInt is deprecated. Use The VarInt struct and VarInt.WriteTo(stream) method instead!")]
     public static void WriteVarInt(this MemoryStream byteStream,int value)
     {
-        while (true)
-        {
-            if ((value & ~VAR_SEGMENT_BITS) == 0) {
-                
-                byteStream.WriteByte((byte)(value));
-                break;
-            }
-            // Write value -------------Write value using logical & with mask so we dont write the sign bit
-            //                                                    |                           /- use mask to set sign bit to true (so it continues)
-            byteStream.WriteByte((byte)((value & VAR_SEGMENT_BITS) | VAR_CONTINUE_BIT));
-
-            // bit shift it to the write because the first 7 bits from the left have been written
-            value >>=7;
-        }
+        new VarInt(value).WriteTo(byteStream);
     }
     /// <summary>
     /// Evaulates and return the size of the VarInt
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
+    [Obsolete("This method is deprecated, do not use!")]
     public static int EvaluateVarInt(int value)
     {
         int index=0;
@@ -73,21 +46,16 @@ public static class PacketDataUtils
         }
 
         return index + 1;
-    }    
-    public static int EvaluateVarIntString(string value)
-    {
-        int sizeA = EvaluateVarInt( value.Length);
-        return sizeA + Encoding.UTF8.GetBytes(value).Length;
     }
 
     /// <summary>
-    /// 
+    /// Writes a string to the memory stream
     /// </summary>
-    /// <param name="bytesBuffer"></param>
-    /// <param name="value"></param>
+    /// <param name="bytesStream">The memory stream</param>
+    /// <param name="value">The string to write</param>
     public static void WriteVarIntString(this MemoryStream bytesStream, string value)
     {
-        WriteVarInt(bytesStream, value.Length);
+        new VarInt(value.Length).WriteTo(bytesStream);
         foreach (var b in Encoding.UTF8.GetBytes(value))
         {
             bytesStream.WriteByte(b);
@@ -95,7 +63,7 @@ public static class PacketDataUtils
     }
     
     /// <summary>
-    /// Read strings previxed with VarInt as their length
+    /// Read strings prefixed with VarInt as their length
     /// </summary>
     /// <param name="bytes">The byte stream to read from</param>
     /// <returns>
@@ -106,7 +74,7 @@ public static class PacketDataUtils
     public static string ReadVarIntString(this MemoryStream bytes)
     {
         // Get string length
-        int stringLength = ReadVarInt(bytes);
+        int stringLength = VarInt.ReadFrom(bytes);
         byte[] buffer = new byte[stringLength];
         bytes.Read(buffer, 0, stringLength);
         string value = Encoding.UTF8.GetString(buffer,0,stringLength);
@@ -122,5 +90,5 @@ public static class PacketDataUtils
     {
         return (client.Client.LocalEndPoint as IPEndPoint).Address.ToString();
     }
-    
+
 }
