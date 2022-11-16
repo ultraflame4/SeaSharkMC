@@ -56,6 +56,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="GeneralUtils.cs" />
+        <Compile Include="Networking\Datatypes\DataUtils.cs" />
         <Compile Include="Networking\Datatypes\VarInt.cs" />
         <Compile Include="Networking\MinecraftPackets\Client\JoinGamePacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Client\LoginSuccessPacket.cs" />
