@@ -57,6 +57,12 @@
     <ItemGroup>
         <Compile Include="GeneralUtils.cs" />
         <Compile Include="Networking\Datatypes\DataUtils.cs" />
+        <Compile Include="Networking\Datatypes\NBT\DimensionCodec.cs" />
+        <Compile Include="Networking\Datatypes\NBT\DimensionRegistry.cs" />
+        <Compile Include="Networking\Datatypes\NBT\DimensionRegistryItem.cs" />
+        <Compile Include="Networking\Datatypes\NBT\DimensionRegistryItemElement.cs" />
+        <Compile Include="Networking\Datatypes\NBT\WNbtList.cs" />
+        <Compile Include="Networking\Datatypes\NBT\WNbtType.cs" />
         <Compile Include="Networking\Datatypes\VarInt.cs" />
         <Compile Include="Networking\MinecraftPackets\Client\JoinGamePacket.cs" />
         <Compile Include="Networking\MinecraftPackets\Client\LoginSuccessPacket.cs" />
