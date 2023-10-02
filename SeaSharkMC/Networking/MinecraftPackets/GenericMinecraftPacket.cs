@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using SeaSharkMC.Networking.Datatypes;
 using Serilog;
 
 namespace SeaSharkMC.Networking.MinecraftPackets;
@@ -9,7 +10,7 @@ namespace SeaSharkMC.Networking.MinecraftPackets;
 /// <summary>
 /// A generic minecraft packet that only knows the packet length and packet id. While it also stores the data bytes, it does not know what it contains
 /// </summary>
-public class RawMinecraftPacket
+public class GenericMinecraftPacket
 {
     protected int packetLength;
     protected int packetId;
@@ -33,12 +34,12 @@ public class RawMinecraftPacket
     /// </summary>
     public MinecraftNetworkClient? SourceClient => sourceClient;
     
-    private RawMinecraftPacket(byte[] bytesArray, int offset=0, MinecraftNetworkClient? sourceClient = null)
+    private GenericMinecraftPacket(byte[] bytesArray, int offset=0, MinecraftNetworkClient? sourceClient = null)
     {
         bytesStream = new MemoryStream(bytesArray,offset,bytesArray.Length-offset); // temp solution, todo fix ltr, very inefficient, converting entire array into memory stream repeatedly
-        packetLength = PacketDataUtils.ReadVarInt(bytesStream);
+        packetLength = VarInt.ReadFrom(bytesStream);
         int packetLengthByteSize = (int)bytesStream.Position;
-        packetId = PacketDataUtils.ReadVarInt(bytesStream);
+        packetId = VarInt.ReadFrom(bytesStream);
 
         this.sourceClient = sourceClient;
 
@@ -50,14 +51,14 @@ public class RawMinecraftPacket
     /// </summary>
     /// <param name="bytesArray"></param>
     /// <param name="sourceClient">Null if server</param>
-    public static RawMinecraftPacket[] Create(byte[] bytesArray, MinecraftNetworkClient? sourceClient = null)
+    public static GenericMinecraftPacket[] Create(byte[] bytesArray, MinecraftNetworkClient? sourceClient = null)
     {
         int offset = 0;
-        List<RawMinecraftPacket> frames = new List<RawMinecraftPacket>();
+        List<GenericMinecraftPacket> frames = new List<GenericMinecraftPacket>();
         
         while (true)
         {
-            RawMinecraftPacket frame = new RawMinecraftPacket(bytesArray, offset, sourceClient);
+            GenericMinecraftPacket frame = new GenericMinecraftPacket(bytesArray, offset, sourceClient);
             
             if (frame.TotalSize < 2)
             {

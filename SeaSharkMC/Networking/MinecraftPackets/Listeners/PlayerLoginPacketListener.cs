@@ -7,7 +7,7 @@ public class PlayerLoginPacketListener : MinecraftPacketListener
 {
     public PlayerLoginPacketListener() : base(0x00) { }
 
-    public override void RecievePacketFrame(RawMinecraftPacket packetFrame)
+    public override void RecievePacketFrame(GenericMinecraftPacket packetFrame)
     {
         switch (packetFrame.SourceClient.state)
         {

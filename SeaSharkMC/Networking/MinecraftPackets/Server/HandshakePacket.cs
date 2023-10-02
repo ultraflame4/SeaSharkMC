@@ -28,7 +28,7 @@ public class HandshakePacket : MinecraftBasePacket
         this.nextState = nextState;
     }
 
-    public HandshakePacket(RawMinecraftPacket packet) : base(packet)
+    public HandshakePacket(GenericMinecraftPacket packet) : base(packet)
     {
         packetId = 0;
 

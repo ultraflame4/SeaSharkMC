@@ -13,7 +13,7 @@ public class LoginStartPacket : MinecraftBasePacket
         this.playerUsername = playerUsername;
     }
 
-    public LoginStartPacket(RawMinecraftPacket packet) : base(packet)
+    public LoginStartPacket(GenericMinecraftPacket packet) : base(packet)
     {
         playerUsername = packet.Stream.ReadVarIntString();
     }

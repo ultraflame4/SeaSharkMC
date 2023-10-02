@@ -10,7 +10,7 @@ public abstract class MinecraftBasePacket
     protected int packetId;
     public int PacketId => packetId;
 
-    public MinecraftBasePacket(RawMinecraftPacket packet)
+    public MinecraftBasePacket(GenericMinecraftPacket packet)
     {
         packetId = packet.PacketId;
     }

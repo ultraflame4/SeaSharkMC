@@ -37,7 +37,7 @@ public class ServerPacketsManager : MarshalByRefObject
         log.Information($"Player {username} logged in successfully from {client.IpAddress}");
         client.Ns.Write(packet.ToBytesArray(),0,bytes.Length);
     }
-    public void ReceiveHandshakePackets(RawMinecraftPacket packet)
+    public void ReceiveHandshakePackets(GenericMinecraftPacket packet)
     {
         switch (packet.SourceClient.state)
         {
@@ -70,7 +70,7 @@ public class ServerPacketsManager : MarshalByRefObject
         return;
     }
 
-    public void RecievePacketFrames(RawMinecraftPacket packet)
+    public void RecievePacketFrames(GenericMinecraftPacket packet)
     {
         // aSize, bSize, .. are the size of the var Int
 
@@ -88,7 +88,7 @@ public class ServerPacketsManager : MarshalByRefObject
     }
     public void RecieveRawNetworkBytes(byte[] byteArray, MinecraftNetworkClient client)
     {
-        foreach (var packetFrame in RawMinecraftPacket.Create(byteArray,client))
+        foreach (var packetFrame in GenericMinecraftPacket.Create(byteArray,client))
         {
             RecievePacketFrames(packetFrame);
         }
