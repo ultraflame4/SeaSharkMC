@@ -34,6 +34,17 @@ public class GenericMinecraftPacket
     /// </summary>
     public MinecraftNetworkClient? SourceClient => sourceClient;
     
+    
+    public GenericMinecraftPacket(byte[] dataBytes, int packetId, int  packetLength, MinecraftNetworkClient? sourceClient = null)
+    {
+        bytesStream = new MemoryStream(dataBytes,0,dataBytes.Length); // temp solution, todo fix ltr, very inefficient, converting entire array into memory stream repeatedly
+        this.packetLength = packetLength;
+        this.packetId = packetId;
+
+        this.sourceClient = sourceClient;
+
+        totalSize = dataBytes.Length;
+    }
     private GenericMinecraftPacket(byte[] bytesArray, int offset=0, MinecraftNetworkClient? sourceClient = null)
     {
         bytesStream = new MemoryStream(bytesArray,offset,bytesArray.Length-offset); // temp solution, todo fix ltr, very inefficient, converting entire array into memory stream repeatedly
