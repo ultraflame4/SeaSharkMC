@@ -12,6 +12,8 @@ class Program
     static byte[] HelloMessage = Encoding.ASCII.GetBytes("Hello Visitor!");
     static ServerPacketsManager _serverPacketsManager;
 
+    TcpListener server = new TcpListener(IPAddress.Any, 9999);
+
     static void Main(string[] args)
     {
         Program main = new Program();
@@ -23,13 +25,13 @@ class Program
         _serverPacketsManager = ServerPacketsManager.GetInstance();
 
         main.server_start(); //starting the server99
+        var endpoint = main.server.LocalEndpoint as IPEndPoint;
+        Console.WriteLine($"Started server at {endpoint?.Address}:{endpoint?.Port}");
         Console.WriteLine("Enter to exit");
         Console.ReadLine();
         Console.WriteLine("Exiting...");
         Log.CloseAndFlush();
     }
-
-    TcpListener server = new TcpListener(IPAddress.Any, 9999);
 
     private void server_start()
     {
