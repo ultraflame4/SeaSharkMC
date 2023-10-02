@@ -9,7 +9,6 @@ using Serilog;
 namespace SeaSharkMC;
 class Program
 {
-    static byte[] HelloMessage = Encoding.ASCII.GetBytes("Hello Visitor!");
     static ServerPacketsManager _serverPacketsManager;
 
     TcpListener server = new TcpListener(IPAddress.Any, 9999);
