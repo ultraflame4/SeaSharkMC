@@ -32,7 +32,7 @@ public class ClientsManager
 
     public void Start()
     {
-        logger.Information($"Starting server at {Host}:{Port}");
+        logger.Information("Starting server at {0}:{1}",Host,Port);
         server.Start();
         connectionThread.Start();
     }
@@ -51,7 +51,7 @@ public class ClientsManager
     {
         TcpClient tcpClient = server.EndAcceptTcpClient(result);
         ClientHandler client = new ClientHandler(tcpClient);
-        logger.Information($"Accepted connection to {client.Host}:{client.Port}");
+        logger.Information("Accepted connection from {0}",client.Endpoint);
         client.Listen();
     }
 }

@@ -10,7 +10,7 @@ public class HandshakeStateHandler : StateHandler
     public override void HandlePacket(IncomingPacket? packet)
     {
         HandshakePacket handshakePacket = new(packet);
-        manager.clientHandler.Log.Verbose(
+        Log.Verbose(
             "Recieved handshake packet with protocol version {ProtocolVersion}, server address {ServerAddress}, server port {ServerPort} and next state {NextState}",
             handshakePacket.protocolVersion, handshakePacket.serverAddress, handshakePacket.serverPort,
             handshakePacket.nextState);

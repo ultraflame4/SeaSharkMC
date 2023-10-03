@@ -10,7 +10,7 @@ public class LoginStateHandler : StateHandler
 
     public void OnLoginStart(LoginStartPacket packet)
     {
-        manager.clientHandler.Log.Information("Player {Username} attempting login!", packet.playerUsername);
+        Log.Information("Player {Username} attempting login!", packet.playerUsername);
         var uuid = GeneralUtils.GetUUId();
         manager.SendPacket(new LoginSuccessPacket(packet.playerUsername, uuid));
     }
@@ -23,7 +23,7 @@ public class LoginStateHandler : StateHandler
                 OnLoginStart(new LoginStartPacket(packet));
                 break;
             default:
-                manager.clientHandler.Log.Warning(
+                Log.Warning(
                     "Recieved unknown packet id {PacketId} in state {State}! Will kick client!",
                     packet.packetId, manager.State);
                 manager.clientHandler.Disconnect();

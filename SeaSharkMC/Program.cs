@@ -11,10 +11,7 @@ class Program
     static void Main(string[] args)
     {
         Program main = new Program();
-        Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {SourceContext:l} | {Message:lj}{NewLine}{Exception}")
-                .CreateLogger();
+        Log.Logger = Logging.Config().CreateLogger();
 
         
         var shark = new SeaShark(new ClientsManager(IPAddress.Any, 9999));

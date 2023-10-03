@@ -14,7 +14,7 @@ public class ClientHandler
     MinecraftNetworkClient mc;
     public readonly NetworkStream ns;
     readonly PacketManager packetManager;
-    public readonly ILogger Log = Serilog.Log.ForContext<ClientHandler>();
+    public readonly ILogger Log ;
 
     public ClientHandler(TcpClient tcpClient)
     {
@@ -22,6 +22,8 @@ public class ClientHandler
         ns = tcpClient.GetStream();
         packetManager = new PacketManager(this);
         mc = new MinecraftNetworkClient(this.tcpClient);
+        Log = Logging.Here<ClientHandler>().ForContext("Prefix", $"({Host}:{Port}) ");
+        
     }
 
     public IPEndPoint Endpoint => tcpClient.Client.LocalEndPoint as IPEndPoint ?? throw new NullReferenceException();
@@ -30,7 +32,7 @@ public class ClientHandler
 
     public void Listen()
     {
-        Log.Information($"Listening to {Host}");
+        Log.Verbose("Listening to {0}",Host);
         while (tcpClient.Connected)
         {
             try
@@ -41,8 +43,6 @@ public class ClientHandler
                     if (incomingPacket == null) continue;
                     packetManager.Recieve(incomingPacket,mc);
                 }
-                
-                
             }
             catch (Exception e)
             {
