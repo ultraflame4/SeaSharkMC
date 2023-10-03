@@ -47,6 +47,10 @@ public class ClientHandler
                     if (incomingPacket == null) continue;
                     packetManager.Recieve(incomingPacket);
                 }
+                else
+                {
+                    packetManager.keepAliveHandler.KeepAlive();
+                }
             }
             catch (Exception e)
             {

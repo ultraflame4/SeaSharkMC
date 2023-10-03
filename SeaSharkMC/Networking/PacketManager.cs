@@ -11,7 +11,9 @@ namespace SeaSharkMC.Networking;
 public class PacketManager
 {
     public readonly ClientHandler client;
-    public ClientState State { get; private set; } 
+    public ClientState State { get; private set; }
+    public KeepAliveHandler keepAliveHandler { get; }
+    
     private StateHandler currentHandler;
     private HandshakeStateHandler handshakeState;
     private LoginStateHandler loginStateHandler;
@@ -20,6 +22,7 @@ public class PacketManager
 
     public PacketManager(ClientHandler client)
     {
+        keepAliveHandler = new KeepAliveHandler(this);
         Log = client.Log.ForContext(GetType());
         this.client = client;
         handshakeState = new(this);
