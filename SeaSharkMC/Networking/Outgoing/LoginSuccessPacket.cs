@@ -15,6 +15,7 @@ public class LoginSuccessPacket: OutgoingPacket
 
     public override void WriteData(MemoryStream stream)
     {
+        stream.Write(uuid);
         new VarIntString(username).WriteTo(stream);
     }
 }
