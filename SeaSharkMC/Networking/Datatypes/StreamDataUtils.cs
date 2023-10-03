@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using SharpNBT;
 
 namespace SeaSharkMC.Networking.Datatypes;
 
@@ -21,7 +22,18 @@ public static class StreamDataUtils
     public static void WriteInt(this Stream stream,int value){stream.Write(BitConverter.GetBytes(value));}
     public static void WriteLong(this Stream stream,long value){stream.Write(BitConverter.GetBytes(value));}
     public static void WriteFloat(this Stream stream,float value){stream.Write(BitConverter.GetBytes(value));}
+    public static void WriteShort(this Stream stream,short value){stream.Write(BitConverter.GetBytes(value));}
     public static void WriteSbyte(this Stream stream,sbyte value){stream.WriteByte(unchecked((byte)value));}
+
+    public static void WriteNBT(this Stream stream, params Tag?[] nbtTag)
+    {
+        var buffer = BufferedTagWriter.Create(CompressionType.None, FormatOptions.Java);
+        foreach (var tag in nbtTag)
+        {
+            if (tag == null) continue;
+            buffer.WriteTag(tag);
+        }
+    }
 
     public static bool ReadBool(this Stream stream)
     {

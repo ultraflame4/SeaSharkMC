@@ -13,6 +13,7 @@ public class Player
     public Gamemode gamemode = Gamemode.CREATIVE;
     public World world;
     public PlayerAbilities abilities = new();
+    public PlayerInventory inventory = new();
     
     public Player(string username, GameServer server, Guid uuid, ClientHandler client, World world)
     {
