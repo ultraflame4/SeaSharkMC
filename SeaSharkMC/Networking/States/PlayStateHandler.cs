@@ -19,12 +19,12 @@ public class PlayStateHandler : StateHandler
 
         player = manager.client.Player ?? throw new NullReferenceException("Error: Player is null!");
         manager.SendPacket(new JoinGamePacket(player.server.config, player.entity_id, false, (byte)player.gamemode));
-        manager.SendPacket(new PluginMessagePacket_C("minecraft:brand", "SeaSharkMC"));
-        manager.SendPacket(new GameDifficultyPacket(player.world.difficulty, player.world.difficultyLocked));
-        manager.SendPacket(new PlayerAbilitiesPacket_C(player.abilities));
-        manager.SendPacket(new WindowItemsPacket(WindowItemsPacket.PLAYER_INVENTORY_ID, player.inventory.slots));
-        manager.SendPacket(new SpawnPositionPacket(new Location(0, 0, 0)));
-        manager.SendPacket(new PlayerPositionAndLookPacket_C(player.position, 0,0,0));
+        // manager.SendPacket(new PluginMessagePacket_C("minecraft:brand", "SeaSharkMC"));
+        // manager.SendPacket(new GameDifficultyPacket(player.world.difficulty, player.world.difficultyLocked));
+        // manager.SendPacket(new PlayerAbilitiesPacket_C(player.abilities));
+        // manager.SendPacket(new WindowItemsPacket(WindowItemsPacket.PLAYER_INVENTORY_ID, player.inventory.slots));
+        // manager.SendPacket(new SpawnPositionPacket(new Location(0, 0, 0)));
+        // manager.SendPacket(new PlayerPositionAndLookPacket_C(player.position, 0,0,0));
     }
 
     public override void HandlePacket(IncomingPacket packet)
