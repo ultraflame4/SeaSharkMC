@@ -24,6 +24,7 @@ public class PlayStateHandler : StateHandler
         manager.SendPacket(new PlayerAbilitiesPacket_C(player.abilities));
         manager.SendPacket(new WindowItemsPacket(WindowItemsPacket.PLAYER_INVENTORY_ID, player.inventory.slots));
         manager.SendPacket(new SpawnPositionPacket(new Location(0, 0, 0)));
+        manager.SendPacket(new PlayerPositionAndLookPacket_C(player.position, 0,0,0));
     }
 
     public override void HandlePacket(IncomingPacket packet)

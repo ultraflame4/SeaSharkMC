@@ -1,4 +1,5 @@
 ﻿using System;
+using Abacus.DoublePrecision;
 using SeaSharkMC.Networking;
 
 namespace SeaSharkMC.Game;
@@ -11,6 +12,10 @@ public class Player
     public readonly GameServer server;
     public readonly ClientHandler client;
     public Gamemode gamemode = Gamemode.CREATIVE;
+    public Vector3 position = Vector3.Zero;
+    /// <summary>
+    /// World the player is in
+    /// </summary>
     public World world;
     public PlayerAbilities abilities = new();
     public PlayerInventory inventory = new();
