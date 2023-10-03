@@ -20,6 +20,8 @@ class Program
         Console.WriteLine("Enter to exit");
         Console.ReadLine();
         Console.WriteLine("Exiting...");
+        shark.Exit();
+        Console.WriteLine("Exit successful.");
         Log.CloseAndFlush();
     }
 

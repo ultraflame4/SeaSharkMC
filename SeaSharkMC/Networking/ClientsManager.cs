@@ -39,6 +39,12 @@ public class ClientsManager
         server.Start();
         connectionThread.Start();
     }
+
+    public void Stop()
+    {
+        logger.Information("Stopping server...");
+        acceptingConnections = false;
+    }
     
     public void ReceiveConnections()
     {

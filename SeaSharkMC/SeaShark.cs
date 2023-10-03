@@ -20,4 +20,9 @@ public class SeaShark
     {
         clientsManager.Start();
     }
+
+    public void Exit()
+    {
+        clientsManager.Stop();
+    }
 }
