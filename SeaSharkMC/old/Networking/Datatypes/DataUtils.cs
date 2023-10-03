@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace SeaSharkMC.Networking.Datatypes;
+namespace SeaSharkMC.old.Networking.Datatypes;
 
 public static class DataUtils
 {

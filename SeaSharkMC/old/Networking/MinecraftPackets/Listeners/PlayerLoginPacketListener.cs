@@ -1,7 +1,8 @@
-﻿using SeaSharkMC.Networking.MinecraftPackets.Client;
-using SeaSharkMC.World;
+﻿using SeaSharkMC.old.Networking.MinecraftPackets.Client;
+using SeaSharkMC.old.Networking.MinecraftPackets.Server;
+using SeaSharkMC.old.World;
 
-namespace SeaSharkMC.Networking.MinecraftPackets.Listeners;
+namespace SeaSharkMC.old.Networking.MinecraftPackets.Listeners;
 
 public class PlayerLoginPacketListener : MinecraftPacketListener
 {

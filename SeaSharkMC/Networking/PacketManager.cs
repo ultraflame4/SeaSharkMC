@@ -1,10 +1,14 @@
 ﻿using SeaSharkMC.Networking.Incoming;
-using SeaSharkMC.Networking.MinecraftPackets;
+using SeaSharkMC.old.Networking;
+using SeaSharkMC.old.Networking.MinecraftPackets;
 
 namespace SeaSharkMC.Networking;
 
 public class PacketManager
 {
+    private readonly ClientHandler clientHandler;
+    public PacketManager(ClientHandler clientHandler) { this.clientHandler = clientHandler; }
+
     /// <summary>
     /// "Sorts" the packet and sends it to the correct handler
     /// </summary>

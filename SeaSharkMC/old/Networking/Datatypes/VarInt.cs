@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using SeaSharkMC.Networking.MinecraftPackets;
 
-namespace SeaSharkMC.Networking.Datatypes;
+namespace SeaSharkMC.old.Networking.Datatypes;
 
 public struct VarInt
 {

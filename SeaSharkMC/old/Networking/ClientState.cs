@@ -1,4 +1,4 @@
-﻿namespace SeaSharkMC.Networking;
+﻿namespace SeaSharkMC.old.Networking;
 
 public enum ClientState
 {

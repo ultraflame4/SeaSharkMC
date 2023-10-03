@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
-using Serilog.Core;
+﻿using System.IO;
 
-namespace SeaSharkMC.Networking.MinecraftPackets;
+namespace SeaSharkMC.old.Networking.MinecraftPackets;
 
 public abstract class MinecraftBasePacket
 {

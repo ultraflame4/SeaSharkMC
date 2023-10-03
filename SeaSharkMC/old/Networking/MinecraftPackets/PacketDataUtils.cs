@@ -3,9 +3,9 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using SeaSharkMC.Networking.Datatypes;
+using SeaSharkMC.old.Networking.Datatypes;
 
-namespace SeaSharkMC.Networking.MinecraftPackets;
+namespace SeaSharkMC.old.Networking.MinecraftPackets;
 
 public static class PacketDataUtils
 {

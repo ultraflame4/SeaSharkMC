@@ -1,4 +1,4 @@
-﻿namespace SeaSharkMC.World;
+﻿namespace SeaSharkMC.old.World;
 
 public enum Gamemode
 {

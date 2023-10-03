@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using SeaSharkMC.Networking.Datatypes;
-using Serilog;
+using SeaSharkMC.old.Networking.Datatypes;
 
-namespace SeaSharkMC.Networking.MinecraftPackets;
+namespace SeaSharkMC.old.Networking.MinecraftPackets;
 
 /// <summary>
 /// A generic minecraft packet that only knows the packet length and packet id. While it also stores the data bytes, it does not know what it contains

@@ -1,6 +1,6 @@
-﻿using SeaSharkMC.Networking;
+﻿using SeaSharkMC.old.Networking;
 
-namespace SeaSharkMC.World;
+namespace SeaSharkMC.old.World;
 
 public class MinecraftPlayer
 {

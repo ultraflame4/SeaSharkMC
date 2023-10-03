@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SeaSharkMC.Networking.MinecraftPackets;
+namespace SeaSharkMC.old.Networking.MinecraftPackets.Server;
 
 public class LoginStartPacket : MinecraftBasePacket
 {

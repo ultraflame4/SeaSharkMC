@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using fNbt;
-using SeaSharkMC.Networking.Datatypes;
+using SeaSharkMC.old.Networking.Datatypes;
 
-namespace SeaSharkMC.Networking.MinecraftPackets.Client;
+namespace SeaSharkMC.old.Networking.MinecraftPackets.Client;
 
 // https://wiki.vg/index.php?title=Protocol&oldid=16681#Join_Game
 

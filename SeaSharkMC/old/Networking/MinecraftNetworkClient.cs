@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Sockets;
-using SeaSharkMC.Networking.MinecraftPackets;
+using SeaSharkMC.old.Networking.MinecraftPackets;
 
-namespace SeaSharkMC.Networking;
+namespace SeaSharkMC.old.Networking;
 
 public class MinecraftNetworkClient
 {

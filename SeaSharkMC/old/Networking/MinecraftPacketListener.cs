@@ -1,8 +1,7 @@
-﻿using System;
-using SeaSharkMC.Networking.MinecraftPackets;
+﻿using SeaSharkMC.old.Networking.MinecraftPackets;
 using Serilog;
 
-namespace SeaSharkMC.Networking;
+namespace SeaSharkMC.old.Networking;
 
 
 public abstract class MinecraftPacketListener

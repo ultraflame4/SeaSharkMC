@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using SeaSharkMC.Networking.MinecraftPackets;
-using SeaSharkMC.Networking.MinecraftPackets.Client;
+using SeaSharkMC.old.Networking.MinecraftPackets;
+using SeaSharkMC.old.Networking.MinecraftPackets.Client;
+using SeaSharkMC.old.Networking.MinecraftPackets.Server;
 using Serilog;
 
-namespace SeaSharkMC.Networking;
+namespace SeaSharkMC.old.Networking;
 
 public class ServerPacketsManager : MarshalByRefObject
 {

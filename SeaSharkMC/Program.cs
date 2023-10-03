@@ -3,16 +3,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using SeaSharkMC.Networking;
-using SeaSharkMC.Networking.MinecraftPackets;
 using Serilog;
 
 namespace SeaSharkMC;
 class Program
 {
-    static ServerPacketsManager _serverPacketsManager;
-
-
-
     static void Main(string[] args)
     {
         Program main = new Program();
@@ -23,9 +18,6 @@ class Program
 
         
         var shark = new SeaShark(new ClientsManager(IPAddress.Any, 9999));
-
-        _serverPacketsManager = ServerPacketsManager.GetInstance();
-
         shark.Run();
         
         Console.WriteLine("Enter to exit");

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Text;
-using Serilog;
 
-namespace SeaSharkMC.Networking.MinecraftPackets;
+namespace SeaSharkMC.old.Networking.MinecraftPackets.Server;
 
 public class HandshakePacket : MinecraftBasePacket
 {

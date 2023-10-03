@@ -1,7 +1,7 @@
 ﻿using System;
 using fNbt;
 
-namespace SeaSharkMC.Networking.Datatypes;
+namespace SeaSharkMC.old.Networking.Datatypes.NBT;
 
 /// <summary>
 /// All subclasses of this class provide an easy way to convert nbt to class instances for easy usage and vice versa.

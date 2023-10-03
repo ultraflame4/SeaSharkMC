@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using SeaSharkMC.Networking.Incoming;
-using SeaSharkMC.Networking.MinecraftPackets;
+using SeaSharkMC.old.Networking;
 using Serilog;
 
 namespace SeaSharkMC.Networking;
@@ -13,13 +13,14 @@ public class ClientHandler
     TcpClient tcpClient;
     MinecraftNetworkClient mc;
     readonly NetworkStream ns;
-    readonly PacketManager packetManager = new PacketManager();
+    readonly PacketManager packetManager;
     readonly ILogger Log = Serilog.Log.ForContext<ClientHandler>();
 
     public ClientHandler(TcpClient tcpClient)
     {
         this.tcpClient = tcpClient;
         ns = tcpClient.GetStream();
+        packetManager = new PacketManager(this);
         mc = new MinecraftNetworkClient(this.tcpClient);
     }
 

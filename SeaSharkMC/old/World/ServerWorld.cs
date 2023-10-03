@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using SeaSharkMC.Networking;
-using SeaSharkMC.Networking.MinecraftPackets;
+using SeaSharkMC.old.Networking;
+using SeaSharkMC.old.Networking.MinecraftPackets;
 using Serilog;
 
-namespace SeaSharkMC.World;
+namespace SeaSharkMC.old.World;
 
 public class ServerWorld
 {

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using fNbt;
 
-namespace SeaSharkMC.Networking.Datatypes.NBT;
+namespace SeaSharkMC.old.Networking.Datatypes.NBT;
 
 public class WNbtList<T, D> : List<T> where T : WNbtType<D> where D : NbtTag
 {

@@ -1,6 +1,6 @@
 ﻿using fNbt;
 
-namespace SeaSharkMC.Networking.Datatypes.NBT;
+namespace SeaSharkMC.old.Networking.Datatypes.NBT;
 
 public class DimensionRegistryItem : WNbtType<NbtCompound>
 {
