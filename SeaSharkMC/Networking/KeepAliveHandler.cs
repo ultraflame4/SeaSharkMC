@@ -12,10 +12,9 @@ public class KeepAliveHandler
     DateTime lastKeepAlive;
     PacketManager packetManager;
     public KeepAliveHandler(PacketManager packetManager) { this.packetManager = packetManager; }
-    
+
     public void SendKeepAlivePacket()
     {
-        
         lastKeepAlive = DateTime.Now;
         var packet = new KeepAlivePacket_C(lastKeepAlive.Ticks);
         try
@@ -38,7 +37,9 @@ public class KeepAliveHandler
         }
         else
         {
-            packetManager.client.Log.Warning("KeepAlive packet received with wrong id! Will disconnect client!");
+            packetManager.client.Log.Warning(
+                "KeepAlive packet received with wrong id! Will disconnect client! Expected {Expected} but got {Got}",
+                lastKeepAlive.Ticks, keepAlivePacket.keepAliveId);
             packetManager.client.Disconnect();
         }
     }
