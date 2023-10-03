@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Net.Sockets;
 using SeaSharkMC.Networking.Incoming;
 using SeaSharkMC.Networking.Outgoing;
 
@@ -6,7 +8,7 @@ namespace SeaSharkMC.Networking;
 
 public class KeepAliveHandler
 {
-    int keepAliveInterval = 19;
+    int keepAliveInterval = 5;
     DateTime lastKeepAlive;
     PacketManager packetManager;
     public KeepAliveHandler(PacketManager packetManager) { this.packetManager = packetManager; }
@@ -15,9 +17,16 @@ public class KeepAliveHandler
     {
         
         lastKeepAlive = DateTime.Now;
-        packetManager.client.Log.Information("KeepAlive packet send with id {id}", lastKeepAlive.Ticks);
         var packet = new KeepAlivePacket_C(lastKeepAlive.Ticks);
-        packetManager.SendPacket(packet);
+        try
+        {
+            packetManager.SendPacket(packet);
+        }
+        catch (IOException e)
+        {
+            packetManager.client.Log.Warning("Failed to send KeepAlive packet! Assume client disconnected!");
+            packetManager.client.Disconnect();
+        }
     }
 
     public void HandleKeepAlivePacket(IncomingPacket packet)

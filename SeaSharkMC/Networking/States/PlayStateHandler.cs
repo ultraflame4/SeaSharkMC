@@ -14,6 +14,7 @@ public class PlayStateHandler : StateHandler
 
     public override void StateEnter()
     {
+        Log.Information("In play state!");
         // refer to https://wiki.vg/index.php?title=Protocol_FAQ&diff=17474&oldid=17440#What.27s_the_normal_login_sequence_for_a_client.3F
 
         player = manager.client.Player ?? throw new NullReferenceException("Error: Player is null!");
