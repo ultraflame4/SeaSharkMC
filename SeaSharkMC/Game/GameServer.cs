@@ -11,6 +11,9 @@ namespace SeaSharkMC.Game;
 public class GameServer
 {
     private ILogger Log = Logging.Here<GameServer>();
+    
+    public string motd = "SeaSharkMC - A C# Minecraft Server - Development Build";
+    
     List<Player> players = new();
     public readonly ServerConfig config;
     public World defaultWorld;

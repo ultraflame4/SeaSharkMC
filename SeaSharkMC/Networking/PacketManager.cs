@@ -15,7 +15,8 @@ public class PacketManager
     public KeepAliveHandler keepAliveHandler { get; }
     
     private StateHandler currentHandler;
-    private HandshakeStateHandler handshakeState;
+    private HandshakeStateHandler handshakeStateHandler;
+    private StatusStateHandler statusStateHandler;
     private LoginStateHandler loginStateHandler;
     private PlayStateHandler playStateHandler;
     private ILogger Log;
@@ -25,12 +26,13 @@ public class PacketManager
         keepAliveHandler = new KeepAliveHandler(this);
         Log = client.Log.ForContext(GetType());
         this.client = client;
-        handshakeState = new(this);
+        statusStateHandler = new(this);
+        handshakeStateHandler = new(this);
         loginStateHandler = new(this);
         playStateHandler = new(this);
 
         State = ClientState.HANDSHAKE;
-        currentHandler = handshakeState;
+        currentHandler = handshakeStateHandler;
     }
 
     public void SwitchState(ClientState state)
@@ -40,11 +42,10 @@ public class PacketManager
         switch (state)
         {
             case ClientState.HANDSHAKE:
-                currentHandler = handshakeState;
+                currentHandler = handshakeStateHandler;
                 break;
             case ClientState.STATUS:
-                Log.Warning("Status state is not implemented yet! Switching back to handshake state!");
-                SwitchState(ClientState.HANDSHAKE);
+                currentHandler = statusStateHandler;
                 break;
             case ClientState.LOGIN:
                 currentHandler = loginStateHandler;
@@ -70,15 +71,16 @@ public class PacketManager
     {
         try
         {
+            Log.Verbose("Handling packet {0}, state {1}", packet.packetId, State);
             currentHandler.HandlePacket(packet);
         }
         catch(Exception e)
         {
             Log.Error(e,
-                "Error while handling packet! Kicking client!!! " +
-                "packet info- id: {0}, length: {2}, data size: {1}" +
+                "Error while handling packet!  Kicking client!!! " +
+                "packet info- id: {0}, length: {2}, data size: {1} Client State {4}" +
                 "\n===Hexdump start===\n{3}\n===Hexdump end===",
-                packet.packetId, packet.data.Capacity,packet.length,packet.data.HexDump());
+                packet.packetId, packet.data.Capacity,packet.length,packet.data.HexDump(),State);
             client.Disconnect();
         }
     }

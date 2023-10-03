@@ -10,7 +10,7 @@ namespace SeaSharkMC.Networking;
 
 public class ClientsManager
 {
-    private readonly GameServer gameServer;
+    public readonly GameServer gameServer;
     private TcpListener server;
     private ILogger logger = Log.ForContext<ClientsManager>();
     public IPEndPoint Endpoint => server.LocalEndpoint as IPEndPoint?? throw new NullReferenceException();

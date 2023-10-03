@@ -4,6 +4,9 @@ namespace SeaSharkMC.Game;
 
 public class ServerConfig
 {
+    public readonly string mc_version = "1.16.5";
+    public readonly string protocol_version = "754";
+    
     public readonly int render_distance = 12;
     public readonly int max_players = 12;
     public readonly bool reducedDebugInfo = false;
