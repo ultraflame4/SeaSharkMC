@@ -15,7 +15,7 @@ public class LoginStateHandler : StateHandler
         manager.SendPacket(new LoginSuccessPacket(packet.playerUsername, uuid));
     }
 
-    public override void HandlePacket(IncomingPacket packet)
+    public override void HandlePacket(IncomingPacket? packet)
     {
         switch (packet.packetId)
         {

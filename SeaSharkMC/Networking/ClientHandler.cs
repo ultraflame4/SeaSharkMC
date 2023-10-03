@@ -37,7 +37,8 @@ public class ClientHandler
             {
                 if (ns.DataAvailable)
                 {
-                    IncomingPacket incomingPacket = IncomingPacket.Read(ns);
+                    IncomingPacket? incomingPacket = IncomingPacket.Read(ns);
+                    if (incomingPacket == null) continue;
                     packetManager.Recieve(incomingPacket,mc);
                 }
                 

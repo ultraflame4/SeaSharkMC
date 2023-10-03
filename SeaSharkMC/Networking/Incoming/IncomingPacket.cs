@@ -22,18 +22,20 @@ public class IncomingPacket
         this.data = data;
     }
 
-    public static IncomingPacket Read(NetworkStream stream)
+    public static IncomingPacket? Read(NetworkStream stream)
     {
 
         int length = VarInt.ReadFrom(stream);
+        if (length == 0) return null;
         int packetId = VarInt.ReadFrom(stream, out int idLength);
-
+        Console.WriteLine(packetId + " " + length);
         MemoryStream data = new MemoryStream(length - idLength);
         byte[] buffer = new byte[data.Capacity];
         stream.Read(buffer,0, buffer.Length);
         data.Write(buffer,0,buffer.Length);
         data.Position = 0;
-        IncomingPacket packet = new IncomingPacket(length,packetId,data); 
+        Console.WriteLine(BitConverter.ToString(buffer).Replace("-",string.Empty));
+        IncomingPacket? packet = new IncomingPacket(length,packetId,data); 
         
         return packet;
     }
