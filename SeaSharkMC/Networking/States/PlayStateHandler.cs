@@ -29,7 +29,7 @@ public class PlayStateHandler : StateHandler
 
     public override void HandlePacket(IncomingPacket packet)
     {
-        Log.Information("Received play packet id {0} data:{1}", packet.packetId, packet.data.HexDump());
+        // Log.Information("Received play packet id {0} data:{1}", packet.packetId, packet.data.HexDump());
         switch (packet.packetId)
         {
             case 0x10:
