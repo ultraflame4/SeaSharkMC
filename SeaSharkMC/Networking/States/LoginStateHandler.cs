@@ -16,8 +16,8 @@ public class LoginStateHandler : StateHandler
         var uuid = GeneralUtils.GetUUId();
         manager.SendPacket(new LoginSuccessPacket(packet.playerUsername, uuid));
         Log.Information("Player {Username} login success!", packet.playerUsername);
-        manager.client.Player = new Player(packet.playerUsername, Guid.NewGuid(), manager.client);
-        manager.client.gameServer.AddPlayer(manager.client.Player);
+        manager.client.Player = manager.client.gameServer.CreatePlayer(packet.playerUsername, manager.client);
+
         manager.SwitchState(ClientState.PLAY);
     }
 

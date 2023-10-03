@@ -16,15 +16,11 @@ public static class StreamDataUtils
     
     public static void WriteBool(this Stream stream, bool value)
     {
-        if (value)
-        {
-            stream.WriteByte(0x01);
-        }
-        else
-        {
-            stream.WriteByte(0x00);
-        }
+        stream.WriteByte(value ? (byte)0x01 : (byte)0x00);
     }
+    public static void WriteInt(this Stream stream,int value){stream.Write(BitConverter.GetBytes(value));}
+    public static void WriteLong(this Stream stream,long value){stream.Write(BitConverter.GetBytes(value));}
+    public static void WriteSbyte(this Stream stream,sbyte value){stream.WriteByte((byte)(object)value);}
 
     public static bool ReadBool(this Stream stream)
     {
