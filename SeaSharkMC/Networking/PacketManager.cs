@@ -60,9 +60,6 @@ public class PacketManager
     public void Recieve(IncomingPacket packet, MinecraftNetworkClient? sourceClient = null)
     {
         currentHandler.HandlePacket(packet);
-        // todo change GenericMinecraftPacket to use the new IncomingPacket
-        // todo remove sourceClient from GenericMinecraftPacket and use a different method to pass it. This is a temp solution
-        // ServerPacketsManager.GetInstance().RecievePacketFrames(new GenericMinecraftPacket(packet.data,packet.packetId,packet.length,sourceClient));
     }
 
     public void SendPacket(OutgoingPacket packet)
