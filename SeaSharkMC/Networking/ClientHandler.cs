@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using SeaSharkMC.Game;
 using SeaSharkMC.Networking.Incoming;
-using SeaSharkMC.old.Networking;
+
 using Serilog;
 
 namespace SeaSharkMC.Networking;

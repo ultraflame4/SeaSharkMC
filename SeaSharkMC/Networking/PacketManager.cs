@@ -1,7 +1,6 @@
 ﻿using System;
 using SeaSharkMC.Networking.Incoming;
 using SeaSharkMC.Networking.Outgoing;
-using SeaSharkMC.old.Networking;
 using SeaSharkMC.Networking.States;
 using ClientState = SeaSharkMC.Networking.States.ClientState;
 
@@ -58,7 +57,7 @@ public class PacketManager
     /// "Sorts" the packet and sends it to the correct handler
     /// </summary>
     /// <param name="packet"></param>
-    public void Recieve(IncomingPacket packet, MinecraftNetworkClient? sourceClient = null)
+    public void Recieve(IncomingPacket packet)
     {
         currentHandler.HandlePacket(packet);
     }

@@ -2,8 +2,6 @@
 using System.IO;
 using System.Net.Sockets;
 using SeaSharkMC.Networking.Datatypes;
-using SeaSharkMC.old.Networking.Datatypes;
-using SeaSharkMC.old.Networking.MinecraftPackets;
 
 namespace SeaSharkMC.Networking.Incoming;
 

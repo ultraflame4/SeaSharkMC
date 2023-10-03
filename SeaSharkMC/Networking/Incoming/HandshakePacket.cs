@@ -2,7 +2,6 @@
 using System.IO;
 using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.Networking.States;
-using SeaSharkMC.old.Networking.Datatypes;
 
 namespace SeaSharkMC.Networking.Incoming;
 
