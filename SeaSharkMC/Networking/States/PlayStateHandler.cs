@@ -21,6 +21,7 @@ public class PlayStateHandler : StateHandler
         manager.SendPacket(new JoinGamePacket(player.server.config,player.entity_id,false,(byte)player.gamemode));
         manager.SendPacket(new PluginMessagePacket_C("minecraft:brand","SeaSharkMC"));
         manager.SendPacket(new GameDifficultyPacket(player.world.difficulty,player.world.difficultyLocked));
+        manager.SendPacket(new PlayerAbilitiesPacket_C(player.abilities));
         
     }
 
