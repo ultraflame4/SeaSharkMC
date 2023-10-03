@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.old.Networking.Datatypes;
 
 namespace SeaSharkMC.old.Networking.MinecraftPackets;

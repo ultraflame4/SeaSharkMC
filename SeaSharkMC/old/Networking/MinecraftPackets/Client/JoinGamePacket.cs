@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using fNbt;
+using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.old.Networking.Datatypes;
 
 namespace SeaSharkMC.old.Networking.MinecraftPackets.Client;

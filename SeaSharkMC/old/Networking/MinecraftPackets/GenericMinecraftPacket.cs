@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.old.Networking.Datatypes;
 
 namespace SeaSharkMC.old.Networking.MinecraftPackets;

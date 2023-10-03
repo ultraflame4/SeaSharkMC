@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace SeaSharkMC.old.Networking.Datatypes;
+namespace SeaSharkMC.Networking.Datatypes;
 
 public struct VarInt
 {
@@ -41,12 +41,22 @@ public struct VarInt
     /// Reads a VarInt from the stream. The stream must be positioned at the start of the VarInt. This method will advance the stream position to the end of the VarInt!
     /// </summary>
     /// <param name="stream"></param>
+    /// <param name="size"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public static VarInt ReadFrom(Stream stream)
+    public static VarInt ReadFrom(Stream stream) { return ReadFrom(stream, out _); }
+
+    /// <summary>
+    /// Reads a VarInt from the stream. The stream must be positioned at the start of the VarInt. This method will advance the stream position to the end of the VarInt!
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="size"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public static VarInt ReadFrom(Stream stream, out int size)
     {
         int value = 0;
-        int position = 0;
+        size = 0;
         byte currentByte;
         while (true)
         {
@@ -58,10 +68,9 @@ public struct VarInt
                 break;
             }
 
-            position += 7;
-            if (position >= 32) throw new ArgumentOutOfRangeException("VarInt is too big");
+            size += 1;
+            if (size >= 4) throw new ArgumentOutOfRangeException("VarInt is too big");
         }
-
 
         return new VarInt(value);
     }
