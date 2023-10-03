@@ -16,5 +16,5 @@ public abstract class StateHandler
 
     public virtual void StateEnter() { }
     public virtual void StateExit() { }
-    public abstract void HandlePacket(IncomingPacket? packet);
+    public abstract void HandlePacket(IncomingPacket packet);
 }

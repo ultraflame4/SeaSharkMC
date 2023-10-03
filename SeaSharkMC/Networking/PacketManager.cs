@@ -56,7 +56,7 @@ public class PacketManager
     /// "Sorts" the packet and sends it to the correct handler
     /// </summary>
     /// <param name="packet"></param>
-    public void Recieve(IncomingPacket? packet, MinecraftNetworkClient? sourceClient = null)
+    public void Recieve(IncomingPacket packet, MinecraftNetworkClient? sourceClient = null)
     {
         currentHandler.HandlePacket(packet);
     }
