@@ -19,19 +19,20 @@ public class ClientHandler
     readonly PacketManager packetManager;
     public readonly ILogger Log ;
 
+    public IPEndPoint Endpoint;
+    public IPAddress Host => Endpoint.Address;
+    public int Port => Endpoint.Port;
     public ClientHandler(TcpClient tcpClient, GameServer gameServer)
     {
         this.tcpClient = tcpClient;
         this.gameServer = gameServer;
         ns = tcpClient.GetStream();
-        packetManager = new PacketManager(this);
+        Endpoint = tcpClient.Client.RemoteEndPoint as IPEndPoint ?? throw new NullReferenceException("Cannot get ip endpoint!");
         Log = Logging.Here<ClientHandler>().ForContext("Prefix", $"({Host}:{Port}) ");
-        
+        packetManager = new PacketManager(this);
     }
 
-    public IPEndPoint Endpoint => tcpClient.Client.LocalEndPoint as IPEndPoint ?? throw new NullReferenceException();
-    public IPAddress Host => Endpoint.Address;
-    public int Port => Endpoint.Port;
+
 
     public void Listen()
     {

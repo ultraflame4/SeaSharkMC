@@ -1,4 +1,5 @@
 ﻿using System;
+using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.Networking.Incoming;
 
 namespace SeaSharkMC.Networking.States;

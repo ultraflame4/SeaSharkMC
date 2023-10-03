@@ -55,4 +55,9 @@ public static class StreamDataUtils
     {
         return BitConverter.ToDouble(stream.ReadBytes(8), 0);
     }
+
+    public static string HexDump(this MemoryStream stream)
+    {
+        return Convert.ToHexString(stream.ToArray());
+    }
 }

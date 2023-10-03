@@ -1,4 +1,5 @@
 ﻿using System;
+using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.Networking.Incoming;
 using SeaSharkMC.Networking.Outgoing;
 using SeaSharkMC.Networking.States;
@@ -15,10 +16,11 @@ public class PacketManager
     private HandshakeStateHandler handshakeState;
     private LoginStateHandler loginStateHandler;
     private PlayStateHandler playStateHandler;
-
+    private ILogger Log;
 
     public PacketManager(ClientHandler client)
     {
+        Log = client.Log.ForContext(GetType());
         this.client = client;
         handshakeState = new(this);
         loginStateHandler = new(this);
@@ -62,7 +64,19 @@ public class PacketManager
     /// <param name="packet"></param>
     public void Recieve(IncomingPacket packet)
     {
-        currentHandler.HandlePacket(packet);
+        try
+        {
+            currentHandler.HandlePacket(packet);
+        }
+        catch(Exception e)
+        {
+            Log.Error(e,
+                "Error while handling packet! Kicking client!!! " +
+                "packet info- id: {0}, length: {2}, data size: {1}" +
+                "\n===Hexdump start===\n{3}\n===Hexdump end===",
+                packet.packetId, packet.data.Capacity,packet.length,packet.data.HexDump());
+            client.Disconnect();
+        }
     }
 
     public void SendPacket(OutgoingPacket packet)
