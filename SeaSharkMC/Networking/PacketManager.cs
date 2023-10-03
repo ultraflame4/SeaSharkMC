@@ -49,6 +49,7 @@ public class PacketManager
             case ClientState.CONFIG:
                 break;
             case ClientState.PLAY:
+                currentHandler = playStateHandler;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
