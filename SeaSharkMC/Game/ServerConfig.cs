@@ -22,8 +22,9 @@ public class ServerConfig
     public ServerConfig(CompoundTag dimensionCodec, World[] worlds, World defaultWorld)
     {
         dimension_codec = dimensionCodec;
-        this.dimension =
-                ((dimension_codec["minecraft:dimension_type"] as CompoundTag)["value"] as ListTag)[0] as CompoundTag;
+        dimension =
+                (((dimension_codec["minecraft:dimension_type"] as CompoundTag)["value"] as ListTag)[0] as CompoundTag)["element"] as CompoundTag;
+        
         this.worlds = worlds;
         default_world = defaultWorld;
     }

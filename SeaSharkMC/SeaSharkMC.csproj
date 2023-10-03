@@ -23,7 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="dimension_codec.snbt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

@@ -60,7 +60,8 @@ public class JoinGamePacket : OutgoingPacket
         
         using var bufferedWriter = BufferedTagWriter.Create(CompressionType.None, FormatOptions.Java);
         
-        stream.WriteNBT(dimension_codec,dimension);
+        stream.WriteNBT(dimension_codec);
+        stream.WriteNBT(dimension);
         
         new VarIntString(world_name).WriteTo(stream);
         stream.WriteLong(hashed_seed);

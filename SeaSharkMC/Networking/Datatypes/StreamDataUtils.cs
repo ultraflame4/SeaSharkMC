@@ -32,12 +32,11 @@ public static class StreamDataUtils
     public static void WriteShort(this Stream stream,short value){stream.WriteBigEndian(BitConverter.GetBytes(value));}
     public static void WriteSbyte(this Stream stream,sbyte value){stream.WriteByte(unchecked((byte)value));}
 
-    public static void WriteNBT(this Stream stream, params Tag?[] nbtTag)
+    public static void WriteNBT(this Stream stream, params Tag[] nbtTag)
     {
-        var writer = new TagWriter(stream, FormatOptions.Java);
+        using var writer = new TagWriter(stream, FormatOptions.Java, true);
         foreach (var tag in nbtTag)
         {
-            if (tag == null) continue;
             writer.WriteTag(tag);
         }
     }
