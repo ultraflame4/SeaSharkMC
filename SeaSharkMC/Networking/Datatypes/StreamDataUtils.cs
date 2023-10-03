@@ -34,11 +34,11 @@ public static class StreamDataUtils
 
     public static void WriteNBT(this Stream stream, params Tag?[] nbtTag)
     {
-        var buffer = BufferedTagWriter.Create(CompressionType.None, FormatOptions.Java);
+        var writer = new TagWriter(stream, FormatOptions.Java);
         foreach (var tag in nbtTag)
         {
             if (tag == null) continue;
-            buffer.WriteTag(tag);
+            writer.WriteTag(tag);
         }
     }
 

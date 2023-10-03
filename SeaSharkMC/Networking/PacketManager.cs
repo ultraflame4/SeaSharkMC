@@ -88,11 +88,11 @@ public class PacketManager
 
     public void SendPacket(OutgoingPacket packet)
     {
-        Log.Verbose("Sending packet {0} of id {1}", packet.GetType().Name,packet.packetId);
-        var sample = new MemoryStream();
-        packet.Write(sample);
-        Log.Verbose("Sample Packet data: {0}", sample.HexDump());
-        Log.Verbose("Sample Packet length: {0} {1}", sample.Length, sample.Position);
+        // Log.Verbose("Sending packet {0} of id {1}", packet.GetType().Name,packet.packetId);
+        // var sample = new MemoryStream();
+        // packet.Write(sample);
+        // Log.Verbose("Sample Packet data: {0}", sample.HexDump());
+        // Log.Verbose("Sample Packet length: {0} {1}", sample.Length, sample.Position);
         packet.Write(client.ns);
     }
 }

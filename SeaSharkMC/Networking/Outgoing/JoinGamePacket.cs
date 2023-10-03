@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using SeaSharkMC.Game;
 using SeaSharkMC.Networking.Datatypes;
@@ -58,9 +59,9 @@ public class JoinGamePacket : OutgoingPacket
         }
         
         using var bufferedWriter = BufferedTagWriter.Create(CompressionType.None, FormatOptions.Java);
-        bufferedWriter.WriteTag(dimension_codec);
-        bufferedWriter.WriteTag(dimension);
-        bufferedWriter.CopyTo(stream);
+        
+        stream.WriteNBT(dimension_codec,dimension);
+        
         new VarIntString(world_name).WriteTo(stream);
         stream.WriteLong(hashed_seed);
         new VarInt(max_players).WriteTo(stream);
@@ -68,6 +69,6 @@ public class JoinGamePacket : OutgoingPacket
         stream.WriteBool(reduced_debug_info);
         stream.WriteBool(enable_respawn_screen);
         stream.WriteBool(is_debug);
-        stream.WriteBool(is_flat);
+        // stream.WriteBool(is_flat);
     }
 }
