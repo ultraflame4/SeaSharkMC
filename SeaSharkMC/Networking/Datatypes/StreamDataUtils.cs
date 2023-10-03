@@ -17,10 +17,10 @@ public static class StreamDataUtils
 
     public static void WriteBigEndian(this Stream stream, byte[] buffer)
     {
-        // if (BitConverter.IsLittleEndian)
-        // {
-        //     Array.Reverse(buffer);
-        // }
+        if (!BitConverter.IsLittleEndian)
+        {
+            Array.Reverse(buffer);
+        }
         stream.Write(buffer, 0, buffer.Length);
     }
     
