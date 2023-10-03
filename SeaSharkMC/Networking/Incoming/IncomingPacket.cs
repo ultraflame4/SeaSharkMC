@@ -26,10 +26,9 @@ public class IncomingPacket
     {
 
         int length = VarInt.ReadFrom(stream);
-        if (length == 0) return null;
-        int packetId = VarInt.ReadFrom(stream, out int idLength);
-        Console.WriteLine(packetId + " " + length);
-        MemoryStream data = new MemoryStream(length - idLength);
+        // if (length == 0) return null;
+        int packetId = VarInt.ReadFrom(stream, out int idSize);
+        MemoryStream data = new MemoryStream(length - idSize);
         byte[] buffer = new byte[data.Capacity];
         stream.Read(buffer,0, buffer.Length);
         data.Write(buffer,0,buffer.Length);

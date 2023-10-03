@@ -57,7 +57,7 @@ public struct VarInt
     public static VarInt ReadFrom(Stream stream, out int size)
     {
         int value = 0;
-        size = 0;
+        size = 1;
         byte currentByte;
         while (true)
         {
