@@ -2,6 +2,7 @@
 using SeaSharkMC.Networking.Incoming;
 using SeaSharkMC.Networking.Outgoing;
 using SeaSharkMC.Networking.States;
+using Serilog;
 using ClientState = SeaSharkMC.Networking.States.ClientState;
 
 namespace SeaSharkMC.Networking;
@@ -37,6 +38,8 @@ public class PacketManager
                 currentHandler = handshakeState;
                 break;
             case ClientState.STATUS:
+                Log.Warning("Status state is not implemented yet! Switching back to handshake state!");
+                SwitchState(ClientState.HANDSHAKE);
                 break;
             case ClientState.LOGIN:
                 currentHandler = loginStateHandler;
