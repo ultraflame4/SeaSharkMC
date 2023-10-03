@@ -56,7 +56,7 @@ public class JoinGamePacket : OutgoingPacket
         {
             name.WriteTo(stream);
         }
-
+        
         using var bufferedWriter = BufferedTagWriter.Create(CompressionType.None, FormatOptions.Java);
         bufferedWriter.WriteTag(dimension_codec);
         bufferedWriter.WriteTag(dimension);

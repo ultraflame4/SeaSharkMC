@@ -48,7 +48,7 @@ public class KeepAliveHandler
     {
         if (DateTime.Now - lastKeepAlive > TimeSpan.FromSeconds(keepAliveInterval))
         {
-            SendKeepAlivePacket();
+            // SendKeepAlivePacket();
         }
     }
 }
