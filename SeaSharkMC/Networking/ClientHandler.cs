@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using SeaSharkMC.Game;
 using SeaSharkMC.Networking.Incoming;
 using SeaSharkMC.old.Networking;
 using Serilog;
@@ -10,18 +11,20 @@ namespace SeaSharkMC.Networking;
 
 public class ClientHandler
 {
-    readonly TcpClient tcpClient;
-    MinecraftNetworkClient mc;
+    public readonly GameServer gameServer;
     public readonly NetworkStream ns;
+    public Player? Player;
+    readonly TcpClient tcpClient;
+    
     readonly PacketManager packetManager;
     public readonly ILogger Log ;
 
-    public ClientHandler(TcpClient tcpClient)
+    public ClientHandler(TcpClient tcpClient, GameServer gameServer)
     {
         this.tcpClient = tcpClient;
+        this.gameServer = gameServer;
         ns = tcpClient.GetStream();
         packetManager = new PacketManager(this);
-        mc = new MinecraftNetworkClient(this.tcpClient);
         Log = Logging.Here<ClientHandler>().ForContext("Prefix", $"({Host}:{Port}) ");
         
     }
@@ -41,7 +44,7 @@ public class ClientHandler
                 {
                     IncomingPacket? incomingPacket = IncomingPacket.Read(ns);
                     if (incomingPacket == null) continue;
-                    packetManager.Recieve(incomingPacket,mc);
+                    packetManager.Recieve(incomingPacket);
                 }
             }
             catch (Exception e)

@@ -11,7 +11,7 @@ public abstract class StateHandler
     {
         this.manager = manager;
         
-        Log = Logging.Here(GetType()).ForContext("Prefix", $"({this.manager.clientHandler.Host}:{this.manager.clientHandler.Port}) ");
+        Log = Logging.Here(GetType()).ForContext("Prefix", $"({this.manager.client.Host}:{this.manager.client.Port}) ");
     }
 
     public virtual void StateEnter() { }

@@ -14,7 +14,7 @@ class Program
         Log.Logger = Logging.Config().CreateLogger();
 
         
-        var shark = new SeaShark(new ClientsManager(IPAddress.Any, 9999));
+        var shark = new SeaShark(IPAddress.Any, 9999);
         shark.Run();
         
         Console.WriteLine("Enter to exit");

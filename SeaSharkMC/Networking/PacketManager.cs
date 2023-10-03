@@ -9,18 +9,20 @@ namespace SeaSharkMC.Networking;
 
 public class PacketManager
 {
-    public readonly ClientHandler clientHandler;
+    public readonly ClientHandler client;
     public ClientState State { get; private set; } 
     private StateHandler currentHandler;
     private HandshakeStateHandler handshakeState;
     private LoginStateHandler loginStateHandler;
+    private PlayStateHandler playStateHandler;
 
 
-    public PacketManager(ClientHandler clientHandler)
+    public PacketManager(ClientHandler client)
     {
-        this.clientHandler = clientHandler;
+        this.client = client;
         handshakeState = new(this);
         loginStateHandler = new(this);
+        playStateHandler = new(this);
 
         State = ClientState.HANDSHAKE;
         currentHandler = handshakeState;
@@ -63,6 +65,6 @@ public class PacketManager
 
     public void SendPacket(OutgoingPacket packet)
     {
-        packet.Write(clientHandler.ns);
+        packet.Write(client.ns);
     }
 }
