@@ -38,7 +38,6 @@ public class ClientHandler
                 if (ns.DataAvailable)
                 {
                     IncomingPacket incomingPacket = IncomingPacket.Read(ns);
-                    Console.WriteLine($"Recieved packet of id {incomingPacket.packetId}");
                     packetManager.Recieve(incomingPacket,mc);
                 }
                 
