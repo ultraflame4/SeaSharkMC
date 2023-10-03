@@ -33,7 +33,7 @@ public class IncomingPacket
         stream.Read(buffer,0, buffer.Length);
         data.Write(buffer,0,buffer.Length);
         data.Position = 0;
-        Console.WriteLine(BitConverter.ToString(buffer).Replace("-",string.Empty));
+        // Console.WriteLine(BitConverter.ToString(buffer).Replace("-",string.Empty));
         IncomingPacket? packet = new IncomingPacket(length,packetId,data); 
         
         return packet;
