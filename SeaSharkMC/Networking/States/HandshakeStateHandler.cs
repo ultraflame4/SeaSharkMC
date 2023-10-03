@@ -2,11 +2,13 @@
 
 namespace SeaSharkMC.Networking.States;
 
-public class HandshakeStateHandler : IStateHandler
+public class HandshakeStateHandler : StateHandler
 {
-    public void HandlePacket(IncomingPacket packet)
+    public HandshakeStateHandler(PacketManager manager) : base(manager) { }
+
+    public override void HandlePacket(IncomingPacket packet)
     {
         HandshakePacket handshakePacket = new(packet);
-        
+        manager.SwitchState(handshakePacket.nextState);
     }
 }

@@ -2,10 +2,11 @@
 
 namespace SeaSharkMC.Networking.States;
 
-public class LoginStateHandler : IStateHandler
+public class LoginStateHandler : StateHandler
 {
-    
-    public void HandlePacket(IncomingPacket packet)
+    public LoginStateHandler(PacketManager manager) : base(manager) { }
+
+    public override void  HandlePacket(IncomingPacket packet)
     {
         
     }
