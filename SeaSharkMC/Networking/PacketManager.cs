@@ -10,7 +10,7 @@ namespace SeaSharkMC.Networking;
 public class PacketManager
 {
     private readonly ClientHandler clientHandler;
-    public ClientState State { get; private set; } = ClientState.LOGIN;
+    public ClientState State { get; private set; } 
     private StateHandler currentHandler;
     private HandshakeStateHandler handshakeState;
     private LoginStateHandler loginStateHandler;
@@ -22,6 +22,7 @@ public class PacketManager
         handshakeState = new(this);
         loginStateHandler = new(this);
 
+        State = ClientState.HANDSHAKE;
         currentHandler = handshakeState;
     }
 
