@@ -1,5 +1,6 @@
 ﻿using System;
 using SeaSharkMC.Networking.Incoming;
+using SeaSharkMC.Networking.Outgoing;
 using SeaSharkMC.old.Networking;
 using SeaSharkMC.Networking.States;
 using SeaSharkMC.old.Networking.MinecraftPackets;
@@ -48,6 +49,7 @@ public class PacketManager
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
 
+     
         currentHandler.StateEnter();
     }
 
@@ -61,5 +63,10 @@ public class PacketManager
         // todo change GenericMinecraftPacket to use the new IncomingPacket
         // todo remove sourceClient from GenericMinecraftPacket and use a different method to pass it. This is a temp solution
         // ServerPacketsManager.GetInstance().RecievePacketFrames(new GenericMinecraftPacket(packet.data,packet.packetId,packet.length,sourceClient));
+    }
+
+    public void SendPacket(OutgoingPacket packet)
+    {
+        packet.Write(clientHandler.ns);
     }
 }

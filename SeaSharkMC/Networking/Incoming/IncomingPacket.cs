@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Sockets;
 using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.old.Networking.Datatypes;
@@ -23,10 +24,15 @@ public class IncomingPacket
 
     public static IncomingPacket Read(NetworkStream stream)
     {
+
         int length = VarInt.ReadFrom(stream);
         int packetId = VarInt.ReadFrom(stream, out int idLength);
+
         MemoryStream data = new MemoryStream(length - idLength);
-        stream.CopyTo(data, data.Capacity);
+        Console.WriteLine($"Packet id: {data.Capacity}");
+        byte[] buffer = new byte[data.Capacity];
+        stream.Read(buffer,0, buffer.Length);
+        data.Write(buffer,0,buffer.Length);
         data.Position = 0;
         IncomingPacket packet = new IncomingPacket(length,packetId,data); 
         

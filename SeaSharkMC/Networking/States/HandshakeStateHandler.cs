@@ -1,4 +1,5 @@
-﻿using SeaSharkMC.Networking.Incoming;
+﻿using System;
+using SeaSharkMC.Networking.Incoming;
 
 namespace SeaSharkMC.Networking.States;
 
@@ -9,6 +10,7 @@ public class HandshakeStateHandler : StateHandler
     public override void HandlePacket(IncomingPacket packet)
     {
         HandshakePacket handshakePacket = new(packet);
+        
         manager.SwitchState(handshakePacket.nextState);
     }
 }

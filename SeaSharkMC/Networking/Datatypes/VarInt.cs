@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Sockets;
 
 namespace SeaSharkMC.Networking.Datatypes;
 
@@ -18,7 +19,7 @@ public struct VarInt
     public static implicit operator int(VarInt varInt) => varInt.value;
     public static implicit operator VarInt(int n) => new VarInt(n);
 
-    public void WriteTo(MemoryStream stream)
+    public void WriteTo(Stream stream)
     {
         while (true)
         {

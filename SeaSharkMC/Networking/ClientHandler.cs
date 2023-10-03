@@ -10,9 +10,9 @@ namespace SeaSharkMC.Networking;
 
 public class ClientHandler
 {
-    TcpClient tcpClient;
+    readonly TcpClient tcpClient;
     MinecraftNetworkClient mc;
-    readonly NetworkStream ns;
+    public readonly NetworkStream ns;
     readonly PacketManager packetManager;
     public readonly ILogger Log = Serilog.Log.ForContext<ClientHandler>();
 
@@ -30,6 +30,7 @@ public class ClientHandler
 
     public void Listen()
     {
+        Log.Information($"Listening to {Host}");
         while (tcpClient.Connected)
         {
             try
@@ -37,6 +38,7 @@ public class ClientHandler
                 if (ns.DataAvailable)
                 {
                     IncomingPacket incomingPacket = IncomingPacket.Read(ns);
+                    Console.WriteLine($"Recieved packet of id {incomingPacket.packetId}");
                     packetManager.Recieve(incomingPacket,mc);
                 }
                 
@@ -52,5 +54,11 @@ public class ClientHandler
         }
 
         Log.Information($"{Host} Connection lost");
+    }
+
+    public void Disconnect()
+    {
+        ns.Close();
+        tcpClient.Close();
     }
 }

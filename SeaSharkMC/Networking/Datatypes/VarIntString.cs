@@ -33,4 +33,10 @@ public class VarIntString
         stream.ReadExactly(stringBytes, 0, stringLength);
         return new VarIntString(Encoding.UTF8.GetString(stringBytes));
     }
+    
+    public void WriteTo(Stream stream)
+    {
+        new VarInt(value.Length).WriteTo(stream);
+        stream.Write(Encoding.UTF8.GetBytes(value));
+    }
 }
