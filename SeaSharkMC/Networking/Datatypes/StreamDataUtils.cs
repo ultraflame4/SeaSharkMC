@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.IO;
 using SharpNBT;
 
@@ -14,16 +15,21 @@ public static class StreamDataUtils
         return buffer;
     }
 
-    
-    public static void WriteBool(this Stream stream, bool value)
+    public static void WriteBigEndian(this Stream stream, byte[] buffer)
     {
-        stream.WriteByte(value ? (byte)0x01 : (byte)0x00);
+        // if (BitConverter.IsLittleEndian)
+        // {
+        //     Array.Reverse(buffer);
+        // }
+        stream.Write(buffer, 0, buffer.Length);
     }
-    public static void WriteInt(this Stream stream,int value){stream.Write(BitConverter.GetBytes(value));}
-    public static void WriteLong(this Stream stream,long value){stream.Write(BitConverter.GetBytes(value));}
-    public static void WriteFloat(this Stream stream,float value){stream.Write(BitConverter.GetBytes(value));}
-    public static void WriteDouble(this Stream stream,double value){stream.Write(BitConverter.GetBytes(value));}
-    public static void WriteShort(this Stream stream,short value){stream.Write(BitConverter.GetBytes(value));}
+    
+    public static void WriteBool(this Stream stream, bool value){stream.WriteByte(value ? (byte)0x01 : (byte)0x00);}
+    public static void WriteInt(this Stream stream,int value){stream.WriteBigEndian(BitConverter.GetBytes(value));}
+    public static void WriteLong(this Stream stream,long value){stream.WriteBigEndian(BitConverter.GetBytes(value));}
+    public static void WriteFloat(this Stream stream,float value){stream.WriteBigEndian(BitConverter.GetBytes(value));}
+    public static void WriteDouble(this Stream stream,double value){stream.WriteBigEndian(BitConverter.GetBytes(value));}
+    public static void WriteShort(this Stream stream,short value){stream.WriteBigEndian(BitConverter.GetBytes(value));}
     public static void WriteSbyte(this Stream stream,sbyte value){stream.WriteByte(unchecked((byte)value));}
 
     public static void WriteNBT(this Stream stream, params Tag?[] nbtTag)

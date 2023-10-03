@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SeaSharkMC.Networking.Datatypes;
 using SeaSharkMC.Networking.Incoming;
 using SeaSharkMC.Networking.Outgoing;
@@ -87,6 +88,10 @@ public class PacketManager
 
     public void SendPacket(OutgoingPacket packet)
     {
+        Log.Verbose("Sending packet {0} of id {1} length", packet.GetType().Name,packet.packetId);
+        var sample = new MemoryStream();
+        packet.Write(sample);
+        Log.Verbose("Sample Packet data: {0}", sample.HexDump());
         packet.Write(client.ns);
     }
 }

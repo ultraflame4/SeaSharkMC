@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Sockets;
 using SeaSharkMC.Networking.Datatypes;
 
@@ -11,13 +12,14 @@ public abstract class OutgoingPacket
 
 
     public abstract void WriteData(MemoryStream stream);
-    public void Write(NetworkStream ns)
+    public void Write(Stream ns)
     {
         MemoryStream dataStream = new MemoryStream();
         new VarInt(packetId).WriteTo(dataStream);
         WriteData(dataStream);
         int packetLength = (int)dataStream.Length;
         new VarInt(packetLength).WriteTo(ns);
+        dataStream.Position = 0;
         dataStream.CopyTo(ns);
     }
 }
