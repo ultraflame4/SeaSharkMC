@@ -14,7 +14,7 @@ public class ClientHandler
     MinecraftNetworkClient mc;
     readonly NetworkStream ns;
     readonly PacketManager packetManager;
-    readonly ILogger Log = Serilog.Log.ForContext<ClientHandler>();
+    public readonly ILogger Log = Serilog.Log.ForContext<ClientHandler>();
 
     public ClientHandler(TcpClient tcpClient)
     {

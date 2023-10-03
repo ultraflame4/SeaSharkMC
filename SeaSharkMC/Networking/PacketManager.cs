@@ -9,7 +9,7 @@ namespace SeaSharkMC.Networking;
 
 public class PacketManager
 {
-    private readonly ClientHandler clientHandler;
+    public readonly ClientHandler clientHandler;
     public ClientState State { get; private set; } 
     private StateHandler currentHandler;
     private HandshakeStateHandler handshakeState;
