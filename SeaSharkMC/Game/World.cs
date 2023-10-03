@@ -7,5 +7,8 @@ public class World
     public readonly bool is_debug = false;
     public readonly bool is_flat = false;
     
+    public GameDifficulty difficulty = GameDifficulty.PEACEFUL;
+    public bool difficultyLocked = true;
+    
     public World(string name) { this.name = name; }
 }

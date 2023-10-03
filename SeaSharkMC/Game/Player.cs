@@ -11,13 +11,16 @@ public class Player
     public readonly GameServer server;
     public readonly ClientHandler client;
     public Gamemode gamemode = Gamemode.CREATIVE;
+    public World world;
+    public PlayerAbilities abilities = new();
     
-    public Player(string username, GameServer server, Guid uuid, ClientHandler client)
+    public Player(string username, GameServer server, Guid uuid, ClientHandler client, World world)
     {
         this.uuid = uuid;
         Username = username;
         this.server = server;
         this.client = client;
+        this.world = world;
     }
     
 }

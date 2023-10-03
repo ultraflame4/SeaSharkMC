@@ -10,7 +10,7 @@ public class ServerConfig
     public readonly bool enableRespawnScreen = true;
     public readonly CompoundTag dimension_codec;
     public readonly CompoundTag dimension;
-
+    
     public readonly World[] worlds;
     public readonly World default_world;
 
