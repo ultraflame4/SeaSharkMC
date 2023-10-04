@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using SeaSharkMC.Networking.Incoming;
 using SeaSharkMC.Networking.Outgoing;
+using SeaSharkMC.Networking.States;
 
 namespace SeaSharkMC.Networking;
 
@@ -16,10 +17,20 @@ public class KeepAliveHandler
     public void SendKeepAlivePacket()
     {
         lastKeepAlive = DateTime.Now;
-        var packet = new KeepAlivePacket_C(lastKeepAlive.Ticks);
+
+
         try
         {
-            packetManager.SendPacket(packet);
+            if (packetManager.State != ClientState.PLAY)
+            {
+                SendEmptyPacket();
+                
+            }
+            else
+            {
+                var packet = new KeepAlivePacket_C(lastKeepAlive.Ticks);
+                packetManager.SendPacket(packet);
+            }
         }
         catch (IOException e)
         {
@@ -27,6 +38,8 @@ public class KeepAliveHandler
             packetManager.client.Disconnect();
         }
     }
+
+    public void SendEmptyPacket() { packetManager.client.ns.WriteByte(0); }
 
     public void HandleKeepAlivePacket(IncomingPacket packet)
     {
@@ -46,9 +59,7 @@ public class KeepAliveHandler
 
     public void KeepAlive()
     {
-        if (DateTime.Now - lastKeepAlive > TimeSpan.FromSeconds(keepAliveInterval))
-        {
-            // SendKeepAlivePacket();
-        }
+        if (DateTime.Now - lastKeepAlive < TimeSpan.FromSeconds(keepAliveInterval)) return;
+        SendKeepAlivePacket();
     }
 }

@@ -86,6 +86,7 @@ public class PacketManager
         }
     }
 
+
     public void SendPacket(OutgoingPacket packet)
     {
         // Log.Verbose("Sending packet {0} of id {1}", packet.GetType().Name,packet.packetId);
