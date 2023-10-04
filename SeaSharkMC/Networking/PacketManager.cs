@@ -75,6 +75,10 @@ public class PacketManager
             // Log.Verbose("Handling packet {0}, state {1}", packet.packetId, State);
             currentHandler.HandlePacket(packet);
         }
+        catch(FailedToSendPacketException e)
+        {
+            throw;
+        }
         catch(Exception e)
         {
             Log.Error(e,
@@ -94,6 +98,14 @@ public class PacketManager
         // packet.Write(sample);
         // Log.Verbose("Sample Packet data: {0}", sample.HexDump());
         // Log.Verbose("Sample Packet length: {0} {1}", sample.Length, sample.Position);
-        packet.Write(client.ns);
+        try
+        {
+            packet.Write(client.ns);
+        }
+        catch (IOException e)
+        {
+
+            throw new FailedToSendPacketException(packet,e);
+        }
     }
 }

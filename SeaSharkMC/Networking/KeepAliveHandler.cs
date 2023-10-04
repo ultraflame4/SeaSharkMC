@@ -32,7 +32,7 @@ public class KeepAliveHandler
                 packetManager.SendPacket(packet);
             }
         }
-        catch (IOException e)
+        catch (FailedToSendPacketException e)
         {
             packetManager.client.Log.Warning("Failed to send KeepAlive packet! Assume client disconnected!");
             packetManager.client.Disconnect();

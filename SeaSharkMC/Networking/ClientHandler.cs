@@ -52,11 +52,19 @@ public class ClientHandler
                     packetManager.keepAliveHandler.KeepAlive();
                 }
             }
+            catch (FailedToSendPacketException e)
+            {
+                Log.Error(e, "Failed to send packet of type {type} and id {id}. Will disconnect!\n" +
+                             "===Packet Hex Dump Start===\n{hexDump}\n===Packet Hex Dump End===",
+                    e.packetType, e.packetId, e.hexData);
+                if (e.innerException != null) Log.Error(e.innerException, "Inner exception");
+                
+                Disconnect();
+            }
             catch (Exception e)
             {
                 Log.Error(e, "An error has occured");
-                ns.Close();
-                tcpClient.Close();
+                Disconnect();
                 break;
             }
         }
