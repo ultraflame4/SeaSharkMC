@@ -58,8 +58,6 @@ public class JoinGamePacket : OutgoingPacket
             name.WriteTo(stream);
         }
         
-        using var bufferedWriter = BufferedTagWriter.Create(CompressionType.None, FormatOptions.Java);
-        
         stream.WriteNBT(dimension_codec);
         stream.WriteNBT(dimension);
         
@@ -70,6 +68,6 @@ public class JoinGamePacket : OutgoingPacket
         stream.WriteBool(reduced_debug_info);
         stream.WriteBool(enable_respawn_screen);
         stream.WriteBool(is_debug);
-        // stream.WriteBool(is_flat);
+        stream.WriteBool(is_flat);
     }
 }
