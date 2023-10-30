@@ -11,3 +11,5 @@ This is currently very much in development and is currently non-working.<br/>
 # State of project
 Players can log in, however they cannot join the world due some issues.
 
+# Disclaimer
+This project is in no way associated with or approved by minecraft or mojang.
